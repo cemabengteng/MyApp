@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt' // 注释处理
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+
+    defaultConfig {
+        applicationId "com.example.plu.myapp"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    apt developmentDependencies.daggerCompiler
+
+    def testDependencies = rootProject.ext.testDependencies
+    testCompile testDependencies.junit
+    testCompile testDependencies.mockito
+
+    def developmentDependencies = rootProject.ext.developmentDependencies
+    compile developmentDependencies.rxJava
+    compile developmentDependencies.rxAndroid
+    compile developmentDependencies.rxlifecycle
+    compile developmentDependencies.appcompat
+    compile developmentDependencies.multidex
+    compile developmentDependencies.dagger
+}

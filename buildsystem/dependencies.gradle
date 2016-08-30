@@ -1,0 +1,26 @@
+ext{
+    rxJavaVersion = '1.1.2'
+    rxAndroidVersion = '1.1.0'
+    rxlifecycle = "0.6.1"
+    appcompatVersion = "24.2.0"
+    multidexVersion = '1.0.1'
+    daggerVersion = '2.0.2'
+
+    junitVersion = '4.12'
+    mockitoVersion = '1.9.5'
+
+    developmentDependencies = [
+            rxJava                    : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid                 : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            rxlifecycle               : "com.trello:rxlifecycle:${rxlifecycle}",
+            appcompat                 : "com.android.support:appcompat-v7:${appcompatVersion}",
+            multidex                  : "com.android.support:multidex:${multidexVersion}",
+            daggerCompiler            : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger                    : "com.google.dagger:dagger:${daggerVersion}",
+    ]
+
+    testDependencies = [
+            junit                    : "junit:junit:${junitVersion}",
+            mockito                  : "org.mockito:mockito-core:${mockitoVersion}",
+    ]
+}
