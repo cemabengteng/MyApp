@@ -47,13 +47,15 @@ ext{
             annotation                : "org.glassfish:javax.annotation:${annotationVersion}",
     ]
 
-    domainDependencies = [
-
-    ]
-
     datatTestDependencies = [
             junit                    : "junit:junit:${junitVersion}",
     ]
+
+    domainDependencies = [
+            rxJava                    : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid                 : "io.reactivex:rxandroid:${rxAndroidVersion}",
+    ]
+
 
     domainTestDependencies = [
             junit                    : "junit:junit:${junitVersion}",
