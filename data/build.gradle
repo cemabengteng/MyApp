@@ -34,6 +34,7 @@ android {
 
 dependencies {
     def dataDependencies = rootProject.ext.dataDependencies
+
     compile dataDependencies.rxJava
     compile dataDependencies.rxAndroid
     compile dataDependencies.appcompat
@@ -43,4 +44,6 @@ dependencies {
     compile dataDependencies.dagger
     compile dataDependencies.daggerCompiler
     compile dataDependencies.annotation
+
+    compile project(':domain')
 }
