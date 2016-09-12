@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/ctv_titlebar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxWidth="85dp"
+        android:minWidth="30dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/ctv_titlebar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:maxWidth="144dp"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/ctv_titlebar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxWidth="100dp"
+        android:minWidth="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:visibility="gone" />
+</RelativeLayout>

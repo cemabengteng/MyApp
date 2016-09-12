@@ -9,7 +9,7 @@ import rx.Observable;
  */
 public class TestDataRepositoryImpl extends DataRepositoryImpl implements TestDataRepository {
 
-    
+
     @Override
     public Observable<String> test() {
         return null;

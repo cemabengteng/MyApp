@@ -26,4 +26,5 @@ dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
     compile domainDependencies.rxJava
     compile domainDependencies.rxAndroid
+    compile domainDependencies.annotation
 }

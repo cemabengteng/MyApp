@@ -28,6 +28,7 @@ ext{
             multidex                  : "com.android.support:multidex:${multidexVersion}",
             daggerCompiler            : "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger                    : "com.google.dagger:dagger:${daggerVersion}",
+            annotation                : "org.glassfish:javax.annotation:${annotationVersion}",
     ]
 
     testDependencies = [
@@ -54,6 +55,7 @@ ext{
     domainDependencies = [
             rxJava                    : "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid                 : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            annotation                : "org.glassfish:javax.annotation:${annotationVersion}",
     ]
 
 

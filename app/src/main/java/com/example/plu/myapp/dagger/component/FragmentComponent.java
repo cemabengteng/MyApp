@@ -1,11 +1,13 @@
 package com.example.plu.myapp.dagger.component;
 
-import dagger.Component;
+import com.example.plu.myapp.dagger.moudle.FragmentModule;
+
+import dagger.Subcomponent;
 
 /**
  * Created by plu on 2016/8/29.
  */
-@Component
+@Subcomponent(modules = FragmentModule.class)
 public interface FragmentComponent {
 
 }
