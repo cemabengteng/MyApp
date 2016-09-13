@@ -17,6 +17,7 @@ ext{
     retrofitAdapterVersion = '2.0.0-beta4'
     annotationVersion = '10.0-b28'
     butterKnifeVersion = '7.0.1'
+    loggerVersion = '1.15'
 
     junitVersion = '4.12'
     mockitoVersion = '1.9.5'
@@ -31,6 +32,7 @@ ext{
             dagger                    : "com.google.dagger:dagger:${daggerVersion}",
             annotation                : "org.glassfish:javax.annotation:${annotationVersion}",
             butterKnife               : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            logger                    : "com.orhanobut:logger:${loggerVersion}"
     ]
 
     testDependencies = [

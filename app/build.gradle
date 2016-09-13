@@ -39,4 +39,7 @@ dependencies {
     compile developmentDependencies.dagger
     compile developmentDependencies.annotation
     compile developmentDependencies.butterKnife
+    compile developmentDependencies.logger
+
+    compile project(':domain')
 }
