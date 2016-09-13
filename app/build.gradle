@@ -38,4 +38,5 @@ dependencies {
     compile developmentDependencies.multidex
     compile developmentDependencies.dagger
     compile developmentDependencies.annotation
+    compile developmentDependencies.butterKnife
 }
