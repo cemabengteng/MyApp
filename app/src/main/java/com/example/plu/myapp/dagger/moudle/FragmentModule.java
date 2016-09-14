@@ -1,5 +1,7 @@
 package com.example.plu.myapp.dagger.moudle;
 
+import android.support.v4.app.Fragment;
+
 import dagger.Module;
 
 /**
@@ -7,4 +9,11 @@ import dagger.Module;
  */
 @Module
 public class FragmentModule {
+
+    private final Fragment mFragment;
+
+    public FragmentModule(Fragment fragment) {
+        this.mFragment = fragment;
+    }
+
 }
