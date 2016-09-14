@@ -42,4 +42,6 @@ dependencies {
     compile developmentDependencies.logger
 
     compile project(':domain')
+    compile project(':data')
+    compile project(':view')
 }

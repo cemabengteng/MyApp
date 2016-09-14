@@ -14,7 +14,6 @@ public abstract class MvpActivity<C extends BaseComponent, P extends MvpPresente
 
     @Override
     protected void initFirst() {
-        super.initFirst();
         mPresenter = createPresenter();
     }
 

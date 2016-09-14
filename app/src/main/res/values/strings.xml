@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MyApp</string>
+
+    <!-- 网络异常 -->
+    <string name="fetch_data_empty">没有任何数据</string>
 </resources>
