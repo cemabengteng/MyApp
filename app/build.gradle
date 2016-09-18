@@ -20,6 +20,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        //butterknif的注解和dagger的注解冲突解决
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
 }
 
 dependencies {
@@ -40,6 +46,7 @@ dependencies {
     compile developmentDependencies.annotation
     compile developmentDependencies.butterKnife
     compile developmentDependencies.logger
+    compile developmentDependencies.toyroom
 
     compile project(':domain')
     compile project(':data')
