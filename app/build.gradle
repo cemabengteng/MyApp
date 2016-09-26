@@ -26,6 +26,11 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
+    //双向数据绑定
+    dataBinding{
+        enabled true;
+    }
+
 }
 
 dependencies {
