@@ -68,4 +68,11 @@ ext{
     domainTestDependencies = [
             junit                    : "junit:junit:${junitVersion}",
     ]
+
+    viewDependencies = [
+            rxJava                    : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid                 : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            annotation                : "org.glassfish:javax.annotation:${annotationVersion}",
+    ]
+
 }

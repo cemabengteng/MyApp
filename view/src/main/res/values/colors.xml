@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 点赞爆心相关颜色 -->
+    <color name="heart_wave_color1">#FF6B00</color>
+    <color name="heart_wave_color2">#FFA600</color>
+    <color name="heart_wave_color3">#FF4BBDFE</color>
+    <color name="heart_wave_color4">#FFDDDDDD</color>
+    <color name="heart_wave_color5">#C2FFFF</color>
+    <color name="heart_wave_color6">#66FFFF</color>
+    <color name="heart_wave_color7">#D6FFAD</color>
+    <color name="heart_wave_color8">#99FF33</color>
+    <color name="heart_wave_color9">#ECD98C</color>
+    <color name="heart_wave_color10">#ECC012</color>
+    <color name="heart_wave_color11">#D9C5EC</color>
+    <color name="heart_wave_color12">#C095EC</color>
+    <color name="heart_wave_color13">#FFFF00</color>
+
+    <color name="black_half_Alpha">#80000000</color>
+    <color name="color_gift_des">#ffcc00</color>
+    <color name="white">#ffffff</color>
+    <color name="black_0.8">#CC000000</color>
+</resources>

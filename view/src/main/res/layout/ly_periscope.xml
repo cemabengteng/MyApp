@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/player_tv_like"
+        style="@style/commen_shadow_tv_style"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="0"
+        android:textSize="12sp" />
+
+    <!--<ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/player_tv_like"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/btn_live_nice1" />-->
+
+    <com.longzhu.tga.view.HeartWaveView
+        android:id="@+id/wave_heart"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@id/player_tv_like"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        app:progress_padding="2.5dp" />
+
+    <com.example.view.heartview.NewHeartAnimSurfaceView
+        android:id="@+id/heartanimatiorview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp" />
+
+</merge>
