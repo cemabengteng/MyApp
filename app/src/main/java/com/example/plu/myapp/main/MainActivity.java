@@ -57,7 +57,9 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
     public void click(View v) {
         switch (v.getId()) {
             case R.id.btStarHeartAni:
-                heartView.addHeartsNow(mRandom.nextInt(10), 500);
+//                heartView.addHearts(mRandom.nextInt(10));
+//                heartView.addHeartsNow(mRandom.nextInt(100),5000);
+                heartView.addHeartNow();
                 break;
         }
     }

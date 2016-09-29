@@ -21,7 +21,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testToyRoom(){
+    public void testToyRoom() {
         Shelly.<String>createDomino("file name")
                 .background()
                 .flatMap(new Function1<String, List<Byte>>() {
@@ -30,7 +30,7 @@ public class ExampleUnitTest {
 //                        File[] files = new File(input).listFiles();
                         byte[] bytes = input.getBytes();
                         List<Byte> result = new ArrayList<>();
-                        for(Byte by : bytes){
+                        for (Byte by : bytes) {
                             result.add(by);
                         }
                         return result;
@@ -46,10 +46,15 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void test(){
+    public void test() {
         long playDuration = 0;
         System.out.print(playDuration / 3600);
         System.out.print(playDuration % 3600 / 60);
         System.out.print(playDuration % 60);
+    }
+
+    @Test
+    public void testExecutors() {
+
     }
 }
