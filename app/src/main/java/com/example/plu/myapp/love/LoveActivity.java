@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.DaggerActivity;
 import com.example.plu.myapp.dagger.base.BaseComponent;
+import com.example.plu.myapp.newheart.NewHeartFragment;
 import com.example.view.loveview.LoveView;
 
 import butterknife.Bind;
@@ -25,5 +26,6 @@ public class LoveActivity extends DaggerActivity<BaseComponent> {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_love);
+        getFragmentManager().beginTransaction().add(R.id.fl, new NewHeartFragment()).commit();
     }
 }

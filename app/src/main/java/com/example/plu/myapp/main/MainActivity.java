@@ -66,17 +66,16 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
             ImageView img = new ImageView(this);
             RelativeLayout.LayoutParams rlPram = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             rlPram.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            // 水平居中
             rlPram.addRule(RelativeLayout.CENTER_HORIZONTAL);
             img.setLayoutParams(rlPram);
             img.setImageResource(R.drawable.ic_qipao_zi_3);
+
             GoodHolder holderTag = new GoodHolder();
             holderTag.time = System.currentTimeMillis();
             img.setTag(holderTag);
             img.setScaleX(0.1f);
             img.setScaleY(0.1f);
             lsImgGoods.add(img);
-
         }
     }
 

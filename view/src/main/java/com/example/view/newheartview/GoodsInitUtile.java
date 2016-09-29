@@ -27,15 +27,8 @@ public class GoodsInitUtile {
     private static int goodType20 = R.drawable.ic_qipao_zi_2;
     private static int goodType21 = R.drawable.ic_qipao_zi_3;
 
-    private static int TYPECOUNT = 14;
+    private static int TYPECOUNT = 21;
 
-    /*
-     *   不同用户的标识id
-     */
-    public static int fromGoodID(int _id) {
-        int rint = (int) (_id % TYPECOUNT);
-        return rint;
-    }
 
     /*
      * 获取点赞的类型
