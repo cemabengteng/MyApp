@@ -4,7 +4,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import rx.Observable;
+import rx.Subscriber;
 import xiaofei.library.shelly.Shelly;
 import xiaofei.library.shelly.function.Action1;
 import xiaofei.library.shelly.function.Function1;
@@ -55,6 +58,22 @@ public class ExampleUnitTest {
 
     @Test
     public void testExecutors() {
+        Observable.interval(1, TimeUnit.SECONDS)
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        System.out.print(aLong + "");
+                    }
+                });
     }
 }

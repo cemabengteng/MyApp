@@ -2,13 +2,13 @@ package com.example.plu.myapp.newheart;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -19,8 +19,11 @@ import com.example.view.newheartview.GoodsInitUtile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by chengXing on 2016/9/29.
@@ -29,6 +32,8 @@ import java.util.TimerTask;
 public class NewHeartFragment extends Fragment {
     private RelativeLayout mRlShowHeartView;
     private List<ImageView> imagesPool;
+    private Button mBt;
+    private Observable<Long> mInterval;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class NewHeartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_heart, container, false);
         mRlShowHeartView = (RelativeLayout) inflate.findViewById(R.id.rlShowHeartView);
+        mBt = (Button) inflate.findViewById(R.id.bt);
         initListener();
         return inflate;
     }
@@ -48,6 +54,7 @@ public class NewHeartFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        mInterval = Observable.interval(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread());
         showNum(10);
     }
 
@@ -57,36 +64,65 @@ public class NewHeartFragment extends Fragment {
         mRlShowHeartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("test", "click");
                 showOne();
+            }
+        });
+        mBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNum(10);
             }
         });
     }
 
-    public void showOne(){
+    public void showOne() {
         setGoodsUiTouch(GoodsInitUtile.getGoodsType(mRandom.nextInt(21)));
     }
 
-    public void showNum(int num){
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                moveHandler.sendEmptyMessage(1);
-            }
-        };
-        timer.schedule(task, 0, 400);
+
+    public void showNum(int num) {
+
+//        Timer timer = new Timer();
+//        TimerTask task = new TimerTask() {
+//            @Override
+//            public void run() {
+//            }
+//        };
+//        timer.schedule(task, 0, 400);
+
+        mInterval
+//                .take(num)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        showOne();
+                    }
+                });
     }
 
 
     private List<ImageView> initGoodImageViews() {
         List<ImageView> images = new ArrayList<>();
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 30; i++) {
             ImageView img = new ImageView(getActivity());
             RelativeLayout.LayoutParams rlPram = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             rlPram.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             rlPram.addRule(RelativeLayout.CENTER_HORIZONTAL);
             img.setLayoutParams(rlPram);
-            img.setImageResource(R.drawable.ic_qipao_zi_3);
+//            img.setImageResource(R.drawable.ic_qipao_zi_3);
 
             GoodHolder holderTag = new GoodHolder();
             holderTag.time = System.currentTimeMillis();
@@ -98,6 +134,7 @@ public class NewHeartFragment extends Fragment {
         return images;
     }
 
+
     public void setGoodsUiTouch(int resource) {
         final ImageView goodImgView = getGoodImageView();
         if (goodImgView == null) {
@@ -106,11 +143,11 @@ public class NewHeartFragment extends Fragment {
         ((GoodHolder) goodImgView.getTag()).isAdd = true;
         ((GoodHolder) goodImgView.getTag()).time = System.currentTimeMillis();
         goodImgView.setImageResource(resource);
+        mRlShowHeartView.removeView(goodImgView);
         mRlShowHeartView.addView(goodImgView);
         goodImgView.setVisibility(View.INVISIBLE);
-
         final Animation anim = GoodAnimationUtile.createAnimation(getActivity());
-        anim.setAnimationListener(new GoodMsgAnimaionList(goodImgView));
+        anim.setAnimationListener(new GoodAnimaionListener(goodImgView));
         goodImgView.startAnimation(anim);
     }
 
@@ -125,52 +162,74 @@ public class NewHeartFragment extends Fragment {
         return null;
     }
 
-    private Handler moveHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1){
-                setGoodsUiTouch(GoodsInitUtile.getGoodsType(mRandom.nextInt(21)));
-                return;
-            }
-            long before = (Long) msg.obj;
-            for (int i = 0; i < mRlShowHeartView.getChildCount(); i++) {
-                ImageView imgv = null;
-                try {
-                    imgv = (ImageView) mRlShowHeartView.getChildAt(i);
-                } catch (Exception e) {
-                    imgv = null;
-                }
-                if (imgv == null) {
-                    continue;
-                }
 
-                long time = ((GoodHolder) imgv.getTag()).time;
-
-                if (time == before) {
-                    ((GoodHolder) imgv.getTag()).isAdd = false;
-                    mRlShowHeartView.removeView(imgv);
-                }
-            }
-        }
-
-    };
-
-    class GoodMsgAnimaionList implements Animation.AnimationListener {
+    class GoodAnimaionListener implements Animation.AnimationListener {
         private ImageView imgv;
 
-        public GoodMsgAnimaionList(ImageView imgv) {
+        public GoodAnimaionListener(ImageView imgv) {
             this.imgv = imgv;
+        }
+
+        public void setImageView(ImageView imag) {
+            this.imgv = imag;
         }
 
         @Override
         public void onAnimationEnd(Animation arg0) {
+            Log.i("test", "onAnimationEnd");
             imgv.clearAnimation();
             imgv.setVisibility(View.INVISIBLE);
 
-            Message msg = moveHandler.obtainMessage();
-            msg.obj = ((GoodHolder) (imgv.getTag())).time;
-            moveHandler.sendMessage(msg);
+            for (int i = 0; i < mRlShowHeartView.getChildCount(); i++) {
+                final ImageView view;
+                try {
+                    view = (ImageView) mRlShowHeartView.getChildAt(i);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    continue;
+                }
+                long time = ((GoodHolder) view.getTag()).time;
+                if (time == ((GoodHolder) imgv.getTag()).time) {
+                    ((GoodHolder) view.getTag()).isAdd = false;
+                    mRlShowHeartView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRlShowHeartView.removeView(view);
+                        }
+                    });
+                }
+            }
+
+//            Observable.create(new Observable.OnSubscribe<ImageView>() {
+//                @Override
+//                public void call(Subscriber<? super ImageView> subscriber) {
+//                    for (int i = 0; i < mRlShowHeartView.getChildCount(); i++) {
+//                        subscriber.onNext((ImageView) mRlShowHeartView.getChildAt(i));
+//                    }
+//                }
+//            })
+//                    .observeOn(Schedulers.io())
+//                    .subscribeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Subscriber<ImageView>() {
+//                        @Override
+//                        public void onCompleted() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(ImageView view) {
+//                            long time = ((GoodHolder) view.getTag()).time;
+//                            if (time == ((GoodHolder) imgv.getTag()).time) {
+//                                ((GoodHolder) view.getTag()).isAdd = false;
+//                                mRlShowHeartView.removeView(view);
+//                            }
+//                        }
+//                    });
         }
 
         @Override
