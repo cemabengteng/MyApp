@@ -55,7 +55,7 @@ public class NewHeartFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mInterval = Observable.interval(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread());
-        showNum(10);
+//        showNum(10);
     }
 
     private Random mRandom = new Random();
@@ -64,14 +64,25 @@ public class NewHeartFragment extends Fragment {
         mRlShowHeartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("test", "click");
-                showOne();
+                mRlShowHeartView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showOne();
+                    }
+                });
             }
         });
         mBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showNum(10);
+                for (int i = 0; i < mRandom.nextInt(20); i++) {
+                    mRlShowHeartView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showOne();
+                        }
+                    }, i * 110);
+                }
             }
         });
     }
@@ -82,19 +93,7 @@ public class NewHeartFragment extends Fragment {
 
 
     public void showNum(int num) {
-
-//        Timer timer = new Timer();
-//        TimerTask task = new TimerTask() {
-//            @Override
-//            public void run() {
-//            }
-//        };
-//        timer.schedule(task, 0, 400);
-
         mInterval
-//                .take(num)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Long>() {
                     @Override
                     public void onCompleted() {
@@ -184,7 +183,7 @@ public class NewHeartFragment extends Fragment {
                 final ImageView view;
                 try {
                     view = (ImageView) mRlShowHeartView.getChildAt(i);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     continue;
                 }
@@ -199,37 +198,6 @@ public class NewHeartFragment extends Fragment {
                     });
                 }
             }
-
-//            Observable.create(new Observable.OnSubscribe<ImageView>() {
-//                @Override
-//                public void call(Subscriber<? super ImageView> subscriber) {
-//                    for (int i = 0; i < mRlShowHeartView.getChildCount(); i++) {
-//                        subscriber.onNext((ImageView) mRlShowHeartView.getChildAt(i));
-//                    }
-//                }
-//            })
-//                    .observeOn(Schedulers.io())
-//                    .subscribeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Subscriber<ImageView>() {
-//                        @Override
-//                        public void onCompleted() {
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onNext(ImageView view) {
-//                            long time = ((GoodHolder) view.getTag()).time;
-//                            if (time == ((GoodHolder) imgv.getTag()).time) {
-//                                ((GoodHolder) view.getTag()).isAdd = false;
-//                                mRlShowHeartView.removeView(view);
-//                            }
-//                        }
-//                    });
         }
 
         @Override
