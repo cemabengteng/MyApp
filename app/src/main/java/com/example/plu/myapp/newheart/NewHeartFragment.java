@@ -22,7 +22,6 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -55,7 +54,6 @@ public class NewHeartFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mInterval = Observable.interval(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread());
-//        showNum(10);
     }
 
     private Random mRandom = new Random();
@@ -90,28 +88,6 @@ public class NewHeartFragment extends Fragment {
     public void showOne() {
         setGoodsUiTouch(GoodsInitUtile.getGoodsType(mRandom.nextInt(21)));
     }
-
-
-    public void showNum(int num) {
-        mInterval
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        showOne();
-                    }
-                });
-    }
-
 
     private List<ImageView> initGoodImageViews() {
         List<ImageView> images = new ArrayList<>();
