@@ -103,9 +103,9 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
     public void click(View v) {
         switch (v.getId()) {
             case R.id.btStarHeartAni:
-//                heartView.addHearts(mRandom.nextInt(10));
-//                heartView.addHeartsNow(mRandom.nextInt(100),5000);
+//                heartView.addHearts(10);
                 heartView.addHeartNow();
+//                heartView.addHeartsNow(10,1000);
                 break;
             case R.id.btStart:
                 sendThumbs();

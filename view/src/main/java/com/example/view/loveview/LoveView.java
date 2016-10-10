@@ -97,6 +97,7 @@ public class LoveView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
+                Log.i("test","value: " + value);
                 // 获取当前点坐标封装到mCurrentPosition
                 mPathMeasure.getPosTan(value, mCurrentPosition, null);
                 postInvalidate();

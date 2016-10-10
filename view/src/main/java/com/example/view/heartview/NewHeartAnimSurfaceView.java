@@ -724,7 +724,7 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
             setFloatValues(0, 1f);
             setDuration(DURATION);
             setInterpolator(new LinearInterpolator());
-            addUpdateListener(new AnimatorUpdateListener() {
+            addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     float value = (float) animation.getAnimatedValue();
@@ -752,6 +752,10 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
          * @param factor 动画的进度
          */
         private void transform(float factor) {
+
+
+            factor = (float) (Math.round(factor * 10000)) / 10000;
+            Log.i("test", "factor: " + factor);
             //锁住渲染，防止丢帧
             Matrix matrix = heart.getTransform().getMatrix();
             Transform transform = heart.getTransform();
@@ -765,9 +769,9 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
             if (mPm != null) {
                 mPm.getMatrix(mDistance * (factor), matrix, PathMeasure.POSITION_MATRIX_FLAG);
             }
-            matrix.preScale(scale, scale);
-            matrix.postRotate(mRotation * factor);
-            transform.setAlpha(1.0F - factor);
+//            matrix.preScale(scale, scale);
+//            matrix.postRotate(mRotation * factor);
+//            transform.setAlpha(1.0F - factor);
             //边界检查,防止左边界截断
             checkBound(matrix);
 

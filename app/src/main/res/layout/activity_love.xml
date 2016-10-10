@@ -6,12 +6,13 @@
               android:layout_height="match_parent">
 
     <com.example.view.loveview.LoveView
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/loveView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <FrameLayout
+        android:visibility="gone"
         android:id="@+id/fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
