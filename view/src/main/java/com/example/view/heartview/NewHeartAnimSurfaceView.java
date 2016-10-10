@@ -752,8 +752,6 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
          * @param factor 动画的进度
          */
         private void transform(float factor) {
-
-
             factor = (float) (Math.round(factor * 10000)) / 10000;
             Log.i("test", "factor: " + factor);
             //锁住渲染，防止丢帧
@@ -781,12 +779,11 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
             int bitmapWidth = heart.getBitmap().getWidth();
             int padding = bitmapWidth / 4;
             float[] values = new float[9];
-            Matrix resultMatrix = heart.getTransform().getMatrix();
-            resultMatrix.getValues(values);
+            matrix.getValues(values);
             if (values[2] < padding) {
                 values[2] = padding;
             }
-            resultMatrix.setValues(values);
+            matrix.setValues(values);
         }
 
         /**
