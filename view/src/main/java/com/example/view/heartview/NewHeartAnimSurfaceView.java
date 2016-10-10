@@ -696,7 +696,6 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
         private Config mConfig;
         private PathMeasure mPm;
         private float mDistance;
-        private float mRotation;
         private WeakReference<View> container;
         private Heart heart;
 
@@ -712,7 +711,6 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
          * 初始化动画路径
          */
         private void initPath() {
-            mRotation = randomRotation();
             View view = container.get();
             if (view == null) return;
             mPm = new PathMeasure(createPath(mCounter, view, 2), false);
@@ -729,6 +727,16 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
                 public void onAnimationUpdate(ValueAnimator animation) {
                     float value = (float) animation.getAnimatedValue();
                     transform(value);
+
+//                    if (lastValue != 0) {
+//                        if (value - lastValue > 50) {
+//                            value = lastValue + 50;
+//                        }
+//                    }
+//                    if (lastValue != 0 && lastValue == value) {
+//                        return;
+//                    }
+//                    lastValue = value;
                 }
             });
             addListener(new AnimatorListenerAdapter() {
@@ -768,7 +776,6 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
                 mPm.getMatrix(mDistance * (factor), matrix, PathMeasure.POSITION_MATRIX_FLAG);
             }
 //            matrix.preScale(scale, scale);
-//            matrix.postRotate(mRotation * factor);
 //            transform.setAlpha(1.0F - factor);
             //边界检查,防止左边界截断
             checkBound(matrix);
@@ -813,10 +820,6 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
             return p;
         }
 
-
-        public float randomRotation() {
-            return mRandom.nextFloat() * 28.6F - 14.3F;
-        }
 
         private float scale(double a, double b, double c, double d, double e) {
             return (float) ((a - b) / (c - b) * (e - d) + d);
