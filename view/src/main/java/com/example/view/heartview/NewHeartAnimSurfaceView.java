@@ -597,7 +597,7 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
                             canvas = surfaceHolder.lockCanvas();
                             // Log.v("PLU","-----render lock canvas");
                             if (canvas != null) {
-                                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //清屏
+//                                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //清屏
                                 if (isRender) {
                                     if (drawingHeartList != null) {
                                         for (Heart heart : drawingHeartList) {
