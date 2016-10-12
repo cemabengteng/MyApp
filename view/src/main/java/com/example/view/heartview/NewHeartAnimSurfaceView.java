@@ -597,7 +597,7 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
                             canvas = surfaceHolder.lockCanvas();
                             // Log.v("PLU","-----render lock canvas");
                             if (canvas != null) {
-//                                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //清屏
+                                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //清屏
                                 if (isRender) {
                                     if (drawingHeartList != null) {
                                         for (Heart heart : drawingHeartList) {
@@ -761,7 +761,7 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
          */
         private void transform(float factor) {
             factor = (float) (Math.round(factor * 10000)) / 10000;
-            Log.i("test", "factor: " + factor);
+//            Log.i("test", "factor: " + factor);
             //锁住渲染，防止丢帧
             Matrix matrix = heart.getTransform().getMatrix();
             Transform transform = heart.getTransform();
@@ -906,10 +906,27 @@ public class NewHeartAnimSurfaceView extends SurfaceView implements SurfaceHolde
             if (transform.hasTransform()) {
                 if (!bitmap.isRecycled()) {
                     paint.setAlpha((int) (transform.getAlpha() * 255));
+//                    Matrix matrix = transform.getMatrix();
+//                    matrix.getValues(f);
+//                    for(float fl : f){
+//                        if (lastVaule != 0){
+//                            if (lastVaule - fl > 0.01){
+//                                fl = lastVaule - 0.01f;
+//                            }
+//                        }
+//                        if (lastVaule != 0 && lastVaule == fl){
+//                            continue;
+//                        }
+//                        Log.i("test","matrix: " + fl);
+//                        lastVaule = fl;
+//                    }
+//                    matrix.setValues(f);
                     canvas.drawBitmap(bitmap, transform.getMatrix(), paint);
                 }
             }
         }
+        private float[] f = new float[9];
+        private float lastVaule = 0;
     }
 
 

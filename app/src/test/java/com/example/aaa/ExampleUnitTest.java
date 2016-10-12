@@ -76,4 +76,10 @@ public class ExampleUnitTest {
                     }
                 });
     }
+
+    @Test
+    public void stringText(){
+        String likesTxt = -1 >= 0 ? (10 + "\n赞") : ("--\n赞");
+        System.out.print(likesTxt);
+    }
 }
