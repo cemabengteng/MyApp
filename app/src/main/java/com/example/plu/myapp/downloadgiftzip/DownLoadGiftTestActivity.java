@@ -9,7 +9,7 @@ import com.example.plu.myapp.R;
  * Created by chengXing on 2016/10/12.
  */
 
-public class DownLoadGiftTextActivity extends Activity {
+public class DownLoadGiftTestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
