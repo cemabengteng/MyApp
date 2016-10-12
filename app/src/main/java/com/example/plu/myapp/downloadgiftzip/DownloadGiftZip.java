@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.Enumeration;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
@@ -39,28 +40,22 @@ public class DownloadGiftZip {
 
 
     private void doCheck() {
-        if (isHavaGiftFile()) {
-            Log.i("test", "存在gift文件");
-        } else {
-            if (isHaveGiftZip()) {
-                Log.i("test", "存在gift压缩包");
-                //TODO 校验压缩包  解压
-                if (verifyZip()) {
+        if (isHaveGiftZip()) {
+            if (verifyZip()) {
+                if (!isHavaGiftFile()) {
                     try {
                         unCompressZip();
-                        Log.i("test", "解压完成");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
-                    //删除当前zip，从新下载
-                    downLoadZip();
+                    Log.i("test", "都准备好了");
                 }
-
             } else {
-                //下载zip包
                 downLoadZip();
             }
+        } else {
+            downLoadZip();
         }
     }
 
@@ -84,8 +79,15 @@ public class DownloadGiftZip {
             }
             long checksum = cis.getChecksum().getValue();
             String crc32 = Long.toHexString(checksum);
+
+            crc32 = "0x" + crc32 + "99549f44044695707a564586d2d1aad6";
             Log.i("test", crc32);
-            if (("0x" + crc32).equals(mValueOfCrc32)) {
+
+            String s = MD5(crc32);
+
+            Log.i("test", s);
+
+            if (s.toLowerCase().equals(mValueOfCrc32)) {
                 return true;
             } else {
                 return false;
@@ -93,6 +95,33 @@ public class DownloadGiftZip {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public String MD5(String s) {
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+        try {
+            byte[] btInput = s.getBytes();
+            // 获得MD5摘要算法的 MessageDigest 对象
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            // 使用指定的字节更新摘要
+            mdInst.update(btInput);
+            // 获得密文
+            byte[] md = mdInst.digest();
+            // 把密文转换成十六进制的字符串形式
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -112,14 +141,14 @@ public class DownloadGiftZip {
                     }
                 } else {
                     File f = new File(mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/");
-                    if (!f.exists()){
+                    if (!f.exists()) {
                         f.mkdir();
                     }
                     BufferedInputStream input = new BufferedInputStream(
                             zipFile.getInputStream(zipEntry));
                     BufferedOutputStream output = new BufferedOutputStream(
                             new FileOutputStream(mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/" + zipEntry.getName()));
-                    Log.i("test","path: " + mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/" + zipEntry.getName());
+                    Log.i("test", "path: " + mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/" + zipEntry.getName());
 
                     int len = -1;
                     byte[] bytes = new byte[2048];
@@ -142,17 +171,6 @@ public class DownloadGiftZip {
                 }
             }
         }
-
-
-//        ZipInputStream zis = new ZipInputStream(new FileInputStream(file));
-//        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(mStorageDirectory.getAbsolutePath() + "/" +  mValueOfCrc32));
-//        int count;
-//        byte data[] = new byte[1024];
-//        while ((count = zis.read(data, 0, 1024)) != -1) {
-//            bos.write(data, 0, count);
-//        }
-//        zis.close();
-//        bos.close();
     }
 
     private boolean isHavaGiftFile() {
