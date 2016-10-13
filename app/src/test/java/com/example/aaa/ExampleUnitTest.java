@@ -1,11 +1,18 @@
 package com.example.aaa;
 
+import com.example.plu.myapp.downloadgiftzip.DownloadGiftzipService;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
@@ -102,9 +109,29 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void textDownloadGiftZip(){
+    public void textDownloadGiftZip() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .build();
+        DownloadGiftzipService service = retrofit.create(DownloadGiftzipService.class);
+        service.downloadPicture("http://img.plures.net/v2/303f/6124/f5e6/60b7/101f/3a84/b225/f895.zip")
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+//                            boolean writtenToDisk = writeResponseBodyToDisk(response.body());
+                        } else {
 
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
     }
+
+
 
 
 }
