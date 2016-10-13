@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscriber;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import xiaofei.library.shelly.Shelly;
 import xiaofei.library.shelly.function.Action1;
 import xiaofei.library.shelly.function.Function1;
@@ -78,8 +81,30 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void stringText(){
+    public void stringText() {
         String likesTxt = -1 >= 0 ? (10 + "\n赞") : ("--\n赞");
         System.out.print(likesTxt);
     }
+
+    @Test
+    public void testRxJava() {
+        Scheduler io = Schedulers.io();
+        Scheduler.Worker worker = io.createWorker();
+        System.out.print("mainThread: " + Thread.currentThread().getName() + "\n");
+        worker.schedule(new Action0() {
+            @Override
+            public void call() {
+                System.out.print("callThread: " + Thread.currentThread().getName() + "\n");
+                System.out.print("call method run" + "\n");
+            }
+        });
+        worker.unsubscribe();
+    }
+
+    @Test
+    public void textDownloadGiftZip(){
+
+    }
+
+
 }

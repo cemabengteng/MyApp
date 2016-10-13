@@ -20,6 +20,7 @@ import java.util.zip.ZipFile;
 
 /**
  * Created by chengXing on 2016/10/12.
+ * 用来下载礼物的压缩包
  */
 
 public class DownloadGiftZip {
@@ -100,7 +101,6 @@ public class DownloadGiftZip {
 
     public String MD5(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
         try {
             byte[] btInput = s.getBytes();
             // 获得MD5摘要算法的 MessageDigest 对象
