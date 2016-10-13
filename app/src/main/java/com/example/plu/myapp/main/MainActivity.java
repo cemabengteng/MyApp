@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
 import com.example.plu.myapp.dagger.component.ActivityComponent;
+import com.example.view.bopengheartview.HeartAnimSurfaceView;
 import com.example.view.heartview.NewHeartAnimSurfaceView;
 import com.example.view.newheartview.GoodAnimationUtile;
 import com.example.view.newheartview.GoodsInitUtile;
@@ -39,6 +40,9 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
     NewHeartAnimSurfaceView heartView;
     @Bind(R.id.thumbContainer)
     RelativeLayout thumbContainer;
+
+    @Bind(R.id.boPengHeartView)
+    HeartAnimSurfaceView boPengHeartView;
 
     private Random mRandom;
     private List<ImageView> lsImgGoods = new ArrayList<>();
@@ -104,7 +108,8 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
         switch (v.getId()) {
             case R.id.btStarHeartAni:
 //                heartView.addHearts(10);
-                heartView.addHeartNow();
+//                heartView.addHeartNow();
+                boPengHeartView.addHeartNow();
 //                heartView.addHeartsNow(10,1000);
                 break;
             case R.id.btStart:
