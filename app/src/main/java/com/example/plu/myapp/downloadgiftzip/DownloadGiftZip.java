@@ -1,6 +1,5 @@
 package com.example.plu.myapp.downloadgiftzip;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,12 +14,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import okhttp3.ResponseBody;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,49 +35,81 @@ import static android.content.ContentValues.TAG;
 
 public class DownloadGiftZip {
 
-    private final File mStorageDirectory;
-    private final String mValueOfCrc32;
-    private final String mzipUrl;
-    private final Context mContext;
+    private File mStorageDirectory;
+    private String mValueOfCrc32;
+    private String mzipUrl;
 
-    public DownloadGiftZip(@NonNull String backgroundAppIcon2, @NonNull String backgroundAppIcon2Url,
-                           Context context) {
-        this.mValueOfCrc32 = checkNull(backgroundAppIcon2);
-        this.mzipUrl = checkNull(backgroundAppIcon2Url);
-        this.mContext = context;
-        mStorageDirectory = context.getExternalFilesDir("gift");
-        doCheck();
+    public DownloadGiftZip(@NonNull List<Gifts> gifts, final File storageDirectory) {
+        if (gifts == null) return;
+        Observable.from(gifts)
+                .observeOn(Schedulers.io())
+                .filter(new Func1<Gifts, Boolean>() {
+                    @Override
+                    public Boolean call(Gifts gifts) {
+                        if (!TextUtils.isEmpty(gifts.getBackgroundAppIcon2()) &&
+                                !TextUtils.isEmpty(gifts.getBackgroundAppIcon2Url())) {
+                            return true;
+                        }
+                        return false;
+                    }
+                })
+                .subscribe(new Action1<Gifts>() {
+                    @Override
+                    public void call(Gifts gifts) {
+                        DownloadGiftZip.this.mValueOfCrc32 = gifts.getBackgroundAppIcon2();
+                        DownloadGiftZip.this.mzipUrl = gifts.getBackgroundAppIcon2Url();
+                        DownloadGiftZip.this.mStorageDirectory = storageDirectory;
+                        doCheck();
+                    }
+                });
     }
 
 
     private void doCheck() {
+        if (!mStorageDirectory.exists()) {
+            mStorageDirectory.mkdir();
+        }
+        //检查是否含有该zip
         if (isHaveGiftZip()) {
+            //检查签名
             if (verifyZip()) {
+                //检查是否解压
                 if (!isHavaGiftFile()) {
-                    try {
-                        unCompressZip();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    unCompressZip();
                 } else {
                     Log.i("test", "都准备好了");
                 }
             } else {
-                downLoadZip();
+                //签名不对的话，重新下载并解压
+                if (downLoadZip()) {
+                    unCompressZip();
+                }
             }
         } else {
-            downLoadZip();
+            //没有的话，下载并解压
+            if (downLoadZip()) {
+                unCompressZip();
+            }
         }
     }
 
-    private void downLoadZip() {
-        File file = new File(mStorageDirectory.getAbsolutePath(), mValueOfCrc32 + ".zip");
+    private boolean downLoadZip() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").build();
+        DownloadGiftzipService service = retrofit.create(DownloadGiftzipService.class);
         try {
-            file.createNewFile();
-            Log.i("test", "下载了zip文件");
+            Response<ResponseBody> response = service.downloadPicture(mzipUrl).execute();
+            if (response.isSuccessful()) {
+                if (writeZipToDisk(response.body())) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return false;
     }
 
     private boolean verifyZip() {
@@ -131,53 +167,72 @@ public class DownloadGiftZip {
         }
     }
 
-    private void unCompressZip() throws Exception {
-        File file = new File(mStorageDirectory.getAbsolutePath(), mValueOfCrc32 + ".zip");
-        ZipFile zipFile = new ZipFile(file);
-        try {
-            Enumeration<?> entrys = zipFile.entries();
-            while (entrys.hasMoreElements()) {
-                ZipEntry zipEntry = (ZipEntry) entrys.nextElement();
-                if (zipEntry.isDirectory()) {
-                    File temp = new File(mStorageDirectory.getAbsolutePath() + zipEntry.getName());
-                    if (!temp.exists()) {
-                        if (!temp.mkdirs()) {
-                            throw new Exception();
-                        }
-                    }
-                } else {
-                    File f = new File(mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/");
-                    if (!f.exists()) {
-                        f.mkdir();
-                    }
-                    BufferedInputStream input = new BufferedInputStream(
-                            zipFile.getInputStream(zipEntry));
-                    BufferedOutputStream output = new BufferedOutputStream(
-                            new FileOutputStream(mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/" + zipEntry.getName()));
-                    Log.i("test", "path: " + mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/" + zipEntry.getName());
 
-                    int len = -1;
-                    byte[] bytes = new byte[2048];
-                    while ((len = input.read(bytes)) != -1) {
-                        output.write(bytes, 0, len);
-                    }
-                    output.close();
-                    input.close();
+    private void unCompressZip() {
+        File file = new File(mStorageDirectory.getAbsolutePath(), mValueOfCrc32 + ".zip");
+        String outPutFile = mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/";
+        org.apache.tools.zip.ZipFile zipFile = null;
+        try {
+            zipFile = new org.apache.tools.zip.ZipFile(file);
+            File f = new File(mStorageDirectory.getAbsolutePath() + "/" + mValueOfCrc32 + "/");
+            if (!f.exists()) {
+                f.mkdir();
+            }
+            Enumeration entrys = zipFile.getEntries();
+            int i = 0;
+            while (entrys.hasMoreElements()) {
+                org.apache.tools.zip.ZipEntry zipEntry = (org.apache.tools.zip.ZipEntry) entrys.nextElement();
+                if (zipEntry == null) {
+                    continue;
                 }
+                if (zipEntry.isDirectory()) continue;
+                Log.i("test", "我读到了一张图片" + (i++));
+                BufferedInputStream input = new BufferedInputStream(
+                        zipFile.getInputStream(zipEntry));
+                BufferedOutputStream output = new BufferedOutputStream(
+                        new FileOutputStream(outPutFile + zipEntry.getName()));
+                Log.i("test", outPutFile + zipEntry.getName());
+
+                int len;
+                byte[] bytes = new byte[1024];
+                while ((len = input.read(bytes)) > 0) {
+                    Log.i("test", "len: " + len);
+                    output.write(bytes, 0, len);
+                    output.flush();
+                }
+                output.close();
+                input.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            File f = new File(outPutFile);
+            if (f.exists()) {
+                delFile(f);
+            }
         } finally {
             if (null != zipFile) {
                 try {
                     zipFile.close();
-                    zipFile = null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
+    //删除文件
+    private void delFile(File file) {
+        if (file.isFile() || file.list().length == 0) {
+            file.delete();
+        } else {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                delFile(f);
+                f.delete();
+            }
+        }
+    }
+
 
     private boolean isHavaGiftFile() {
         File[] files = mStorageDirectory.listFiles();
@@ -192,28 +247,25 @@ public class DownloadGiftZip {
     }
 
     private boolean isHaveGiftZip() {
-        File[] files = mStorageDirectory.listFiles();
-        String zipName = mValueOfCrc32 + ".zip";
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    continue;
-                }
-                if (zipName.equals(file.getName())) {
-                    return true;
+        try {
+            File[] files = mStorageDirectory.listFiles();
+            String zipName = mValueOfCrc32 + ".zip";
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        continue;
+                    }
+                    if (zipName.equals(file.getName())) {
+                        return true;
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
 
-    private String checkNull(String s) {
-        if (TextUtils.isEmpty(s)) {
-            return "";
-        } else {
-            return s;
-        }
-    }
 
     //把zip包保存起来
     private boolean writeZipToDisk(ResponseBody body) {
