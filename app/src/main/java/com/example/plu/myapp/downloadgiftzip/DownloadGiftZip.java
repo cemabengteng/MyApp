@@ -34,12 +34,19 @@ import static android.content.ContentValues.TAG;
  */
 
 public class DownloadGiftZip {
+    private static final DownloadGiftZip instance = new DownloadGiftZip();
 
     private File mStorageDirectory;
     private String mValueOfCrc32;
     private String mzipUrl;
 
-    public DownloadGiftZip(@NonNull List<Gifts> gifts, final File storageDirectory) {
+    private DownloadGiftZip(){}
+
+    public static DownloadGiftZip getInstance(){
+        return instance;
+    }
+
+    public void start(@NonNull List<Gifts> gifts, final File storageDirectory) {
         if (gifts == null) return;
         Observable.from(gifts)
                 .observeOn(Schedulers.io())
