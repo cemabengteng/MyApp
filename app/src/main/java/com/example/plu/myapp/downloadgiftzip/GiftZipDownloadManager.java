@@ -19,8 +19,12 @@ import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -33,16 +37,16 @@ import static android.content.ContentValues.TAG;
  * 用来下载礼物的压缩包
  */
 
-public class DownloadGiftZip {
-    private static final DownloadGiftZip instance = new DownloadGiftZip();
+public class GiftZipDownloadManager {
+    private static final GiftZipDownloadManager instance = new GiftZipDownloadManager();
 
     private File mStorageDirectory;
     private String mValueOfCrc32;
     private String mzipUrl;
 
-    private DownloadGiftZip(){}
+    private GiftZipDownloadManager(){}
 
-    public static DownloadGiftZip getInstance(){
+    public static GiftZipDownloadManager getInstance(){
         return instance;
     }
 
@@ -58,19 +62,16 @@ public class DownloadGiftZip {
                 .filter(new Func1<Gifts, Boolean>() {
                     @Override
                     public Boolean call(Gifts gifts) {
-                        if (!TextUtils.isEmpty(gifts.getBackgroundAppIcon2()) &&
-                                !TextUtils.isEmpty(gifts.getBackgroundAppIcon2Url())) {
-                            return true;
-                        }
-                        return false;
+                        return !TextUtils.isEmpty(gifts.getBackgroundAppIcon2()) &&
+                                !TextUtils.isEmpty(gifts.getBackgroundAppIcon2Url());
                     }
                 })
                 .subscribe(new Action1<Gifts>() {
                     @Override
                     public void call(Gifts gifts) {
-                        DownloadGiftZip.this.mValueOfCrc32 = gifts.getBackgroundAppIcon2();
-                        DownloadGiftZip.this.mzipUrl = gifts.getBackgroundAppIcon2Url();
-                        DownloadGiftZip.this.mStorageDirectory = storageDirectory;
+                        GiftZipDownloadManager.this.mValueOfCrc32 = gifts.getBackgroundAppIcon2();
+                        GiftZipDownloadManager.this.mzipUrl = gifts.getBackgroundAppIcon2Url();
+                        GiftZipDownloadManager.this.mStorageDirectory = storageDirectory;
                         doCheck();
                     }
                 });
@@ -142,18 +143,14 @@ public class DownloadGiftZip {
 
             Log.i("test", s);
 
-            if (s.toLowerCase().equals(mValueOfCrc32)) {
-                return true;
-            } else {
-                return false;
-            }
+            return s.toLowerCase().equals(mValueOfCrc32);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public String MD5(String s) {
+    private String MD5(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             byte[] btInput = s.getBytes();
@@ -306,14 +303,30 @@ public class DownloadGiftZip {
                 return false;
             } finally {
                 if (inputStream != null) {
-                    inputStream.close();
+                    try {
+                        inputStream.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 if (outputStream != null) {
-                    outputStream.close();
+                    try {
+                        outputStream.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }
+
+    interface DownloadGiftzipService {
+        @Streaming
+        @GET
+        Call<ResponseBody> downloadPicture(@Url String fileUrl);
+    }
 }
+
+

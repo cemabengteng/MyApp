@@ -34,6 +34,6 @@ public class DownLoadGiftTestActivity extends Activity {
         gifts.add(gifts1);
         gifts.add(gifts2);
 
-        DownloadGiftZip.getInstance().start(gifts, this.getExternalFilesDir("gift"));
+        GiftZipDownloadManager.getInstance().start(gifts, this.getExternalFilesDir("gift"));
     }
 }

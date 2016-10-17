@@ -1,7 +1,5 @@
 package com.example.aaa;
 
-import com.example.plu.myapp.downloadgiftzip.DownloadGiftzipService;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
