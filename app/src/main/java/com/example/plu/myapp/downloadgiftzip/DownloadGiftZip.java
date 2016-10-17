@@ -46,6 +46,11 @@ public class DownloadGiftZip {
         return instance;
     }
 
+    /**
+     * 下载zip礼物包，并解压
+     * @param gifts  全局礼物列表
+     * @param storageDirectory   zip包要存储的位置 建议存在context.getExternalFilesDir("gift")下
+     */
     public void start(@NonNull List<Gifts> gifts, final File storageDirectory) {
         if (gifts == null) return;
         Observable.from(gifts)
