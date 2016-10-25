@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.example.plu.myapp.App;
 import com.example.plu.myapp.dagger.base.BaseComponent;
+import com.example.plu.myapp.dagger.base.BaseFragmentDagger;
 import com.example.plu.myapp.dagger.component.CommonFragmentComponent;
 import com.example.plu.myapp.dagger.component.FragmentComponent;
 import com.example.plu.myapp.dagger.moudle.FragmentModule;
@@ -13,7 +14,7 @@ import com.example.plu.myapp.dagger.moudle.FragmentModule;
 /**
  * Created by chengXing on 2016/9/14.
  */
-public class DaggerFragment<C extends BaseComponent> extends RxFragment {
+public abstract class DaggerFragment<C extends BaseComponent> extends BaseFragment implements BaseFragmentDagger<C> {
 
     private C mComponent;
     private CommonFragmentComponent mCommonFragmentComponent;
@@ -29,14 +30,15 @@ public class DaggerFragment<C extends BaseComponent> extends RxFragment {
         mComponent = initComponent(fragmentComponent);
     }
 
-    public CommonFragmentComponent initCommon(){
+    public CommonFragmentComponent initCommon() {
         mCommonFragmentComponent = App.getInstance().getApplicationComponent().provideFragmentComponent(new FragmentModule(this)).provideCommonComponent();
         return mCommonFragmentComponent;
     }
 
-    protected  C initComponent(@NonNull FragmentComponent component){
+    @Override
+    public C initComponent(@NonNull FragmentComponent component) {
         return null;
-    };
+    }
 
     @Override
     public void onDestroyView() {

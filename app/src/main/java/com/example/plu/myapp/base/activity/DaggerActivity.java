@@ -28,24 +28,24 @@ public abstract class DaggerActivity<T extends BaseComponent> extends BaseActivi
     }
 
 
-
-    protected void initInject(){
+    protected void initInject() {
         ActivityComponent activityComponent = App.getInstance().getApplicationComponent().provideActivityComponent(new ActivityModule(this));
         mComponent = initComponent(activityComponent);
     }
 
 
-    protected void initFirst(){}
+    protected void initFirst() {
+    }
 
     @Override
-    public T initComponent(@NonNull  ActivityComponent component){
+    public T initComponent(@NonNull ActivityComponent component) {
         return null;
-    };
+    }
 
-//    public CommonActivityComponent initCommon(){
-//        mCommonActivityComponent = App.getInstance().getApplicationComponent().provideActivityComponent(new ActivityModule(this)).provideCommonComponent();
-//        return mCommonActivityComponent;
-//    }
+    public CommonActivityComponent initCommon() {
+        mCommonActivityComponent = App.getInstance().getApplicationComponent().provideActivityComponent(new ActivityModule(this)).provideCommonComponent();
+        return mCommonActivityComponent;
+    }
 
     @Override
     protected void onDestroy() {

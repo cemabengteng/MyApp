@@ -22,10 +22,10 @@ public abstract class MvpActivity<C extends BaseComponent, P extends MvpPresente
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null){
+        if (mPresenter != null) {
             Logger.d("Presenter被销毁了");
             mPresenter.detachView();
         }
+        super.onDestroy();
     }
 }
