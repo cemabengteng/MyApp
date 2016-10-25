@@ -44,20 +44,23 @@ public class GiftZipDownloadManager {
     private String mValueOfCrc32;
     private String mzipUrl;
 
-    private GiftZipDownloadManager(){}
+    private GiftZipDownloadManager() {
+    }
 
-    public static GiftZipDownloadManager getInstance(){
+    public static GiftZipDownloadManager getInstance() {
         return instance;
     }
 
     /**
      * 下载zip礼物包，并解压
-     * @param gifts  全局礼物列表
-     * @param storageDirectory   zip包要存储的位置 建议存在context.getExternalFilesDir("gift")下
+     *
+     * @param gifts            全局礼物列表
+     * @param storageDirectory zip包要存储的位置 建议存在context.getExternalFilesDir("gift")下
      */
     public void start(@NonNull List<Gifts> gifts, final File storageDirectory) {
         if (gifts == null) return;
-        Observable.from(gifts)
+        Observable
+                .from(gifts)
                 .observeOn(Schedulers.io())
                 .filter(new Func1<Gifts, Boolean>() {
                     @Override
@@ -66,15 +69,71 @@ public class GiftZipDownloadManager {
                                 !TextUtils.isEmpty(gifts.getBackgroundAppIcon2Url());
                     }
                 })
+                .map(new Func1<Gifts, Gifts>() {
+                    @Override
+                    public Gifts call(Gifts gifts) {
+                        //创建文件夹
+                        if (!mStorageDirectory.exists()) {
+                            mStorageDirectory.mkdir();
+                        }
+                        return gifts;
+                    }
+                })
+                .map(new Func1<Gifts, Gifts>() {
+                    @Override
+                    public Gifts call(Gifts gifts) {
+                        //检查是否含有该zip
+                        if (isHaveGiftZip()) {
+                            return  gifts;
+                        }
+                        return  null;
+                    }
+                })
+                .map(new Func1<Gifts, Gifts>() {
+                    @Override
+                    public Gifts call(Gifts gifts) {
+                        //检查签名
+                        if (verifyZip()) {
+                            return  gifts;
+                        }
+                        return  null;
+                    }
+                })
+                .map(new Func1<Gifts, Gifts>() {
+                    @Override
+                    public Gifts call(Gifts gifts) {
+                        //检查是否解压
+                        if (isHavaGiftFile()) {
+                            return  gifts;
+                        }
+                        return  null;
+                    }
+                })
+                .filter(new Func1<Gifts, Boolean>() {
+                    @Override
+                    public Boolean call(Gifts gifts) {
+                        return gifts==null;
+                    }
+                })
                 .subscribe(new Action1<Gifts>() {
                     @Override
                     public void call(Gifts gifts) {
-                        GiftZipDownloadManager.this.mValueOfCrc32 = gifts.getBackgroundAppIcon2();
-                        GiftZipDownloadManager.this.mzipUrl = gifts.getBackgroundAppIcon2Url();
-                        GiftZipDownloadManager.this.mStorageDirectory = storageDirectory;
-                        doCheck();
+                        if (downLoadZip()) {
+                            unCompressZip();
+                        }
                     }
                 });
+
+
+//                .subscribe(new Action1<Gifts>() {
+//                    @Override
+//                    public void call(Gifts gifts) {
+//                        GiftZipDownloadManager.this.mValueOfCrc32 = gifts.getBackgroundAppIcon2();
+//                        GiftZipDownloadManager.this.mzipUrl = gifts.getBackgroundAppIcon2Url();
+//                        GiftZipDownloadManager.this.mStorageDirectory = storageDirectory;
+//                        doCheck();
+//                    }
+//                });
     }
 
 
@@ -305,14 +364,14 @@ public class GiftZipDownloadManager {
                 if (inputStream != null) {
                     try {
                         inputStream.close();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 if (outputStream != null) {
                     try {
                         outputStream.close();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

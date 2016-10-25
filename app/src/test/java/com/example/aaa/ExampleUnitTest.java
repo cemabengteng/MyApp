@@ -6,15 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.functions.Action0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import xiaofei.library.shelly.Shelly;
 import xiaofei.library.shelly.function.Action1;
@@ -107,29 +103,32 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void textDownloadGiftZip() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .build();
-        DownloadGiftzipService service = retrofit.create(DownloadGiftzipService.class);
-        service.downloadPicture("http://img.plures.net/v2/303f/6124/f5e6/60b7/101f/3a84/b225/f895.zip")
-                .enqueue(new Callback<ResponseBody>() {
+    public void testRxjava() {
+        Observable.from(new String[]{"aaa", "bbb"})
+                .map(new Func1<String, String>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-//                            boolean writtenToDisk = writeResponseBodyToDisk(response.body());
-                        } else {
-
-                        }
+                    public String call(String s) {
+                        return s + "1";
                     }
-
+                })
+                .map(new Func1<String, String>() {
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                    public String call(String s) {
+                        return s+"2";
+                    }
+                })
+                .subscribe(new rx.functions.Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.print(s + "\n");
                     }
                 });
     }
-
-
 
 
 }
