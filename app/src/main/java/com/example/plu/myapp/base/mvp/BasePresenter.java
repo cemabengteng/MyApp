@@ -19,31 +19,31 @@ public class BasePresenter<V extends MvpView> extends MvpBasePresenter<V> {
     private final FragmentLifecycleProvider mFragmentLifecycleProvider;
     private final LayoutLifecycleProvider mLayoutLifecycleProvider;
 
-    public BasePresenter(PresenterProvider presenterProvider, Object ...objects) {
+    public BasePresenter(PresenterProvider presenterProvider, Object... objects) {
         this.mObjects = objects;
         mContext = presenterProvider.getContext();
         mActivityLifecycleProvider = presenterProvider.getActivityLifecycleProvider();
         mFragmentLifecycleProvider = presenterProvider.getFragmentLifecycleProvider();
         mLayoutLifecycleProvider = presenterProvider.getLayoutLifecycleProvider();
-        if (isViewAttached()){
+        if (isViewAttached()) {
             return;
         }
-        if (mActivityLifecycleProvider != null){
-            attachView((V)mActivityLifecycleProvider);
-        }else if (mFragmentLifecycleProvider != null){
-            attachView((V)mFragmentLifecycleProvider);
-        }else if (mLayoutLifecycleProvider != null){
-            attachView((V)mLayoutLifecycleProvider);
+        if (mActivityLifecycleProvider != null) {
+            attachView((V) mActivityLifecycleProvider);
+        } else if (mFragmentLifecycleProvider != null) {
+            attachView((V) mFragmentLifecycleProvider);
+        } else if (mLayoutLifecycleProvider != null) {
+            attachView((V) mLayoutLifecycleProvider);
         }
     }
 
 
-    public Object getProvide(){
-        if (mActivityLifecycleProvider != null){
+    public Object getProvide() {
+        if (mActivityLifecycleProvider != null) {
             return mActivityLifecycleProvider;
-        }else if (mFragmentLifecycleProvider != null){
+        } else if (mFragmentLifecycleProvider != null) {
             return mFragmentLifecycleProvider;
-        }else if (mLayoutLifecycleProvider != null){
+        } else if (mLayoutLifecycleProvider != null) {
             return mLayoutLifecycleProvider;
         }
         return null;
@@ -61,18 +61,17 @@ public class BasePresenter<V extends MvpView> extends MvpBasePresenter<V> {
     }
 
     private void releaseUserCase() {
-        if (mObjects == null || mObjects.length == 0){
+        if (mObjects == null || mObjects.length == 0) {
             return;
         }
-        for (Object o : mObjects){
-            if (o == null){
+        for (Object o : mObjects) {
+            if (o == null) {
                 continue;
             }
-            if (o instanceof BaseUserCase){
+            if (o instanceof BaseUserCase) {
                 ((BaseUserCase) o).release();
             }
             o = null;
         }
     }
-
 }
