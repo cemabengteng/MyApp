@@ -25,20 +25,20 @@ public class ActivityModule {
     @Provides
     @ActivityScope
     @ContextLevel(ContextLevel.ACTIVITY)
-    Context provideContext(){
-        return (Activity)mActivityLifecycleProvider;
+    Context provideContext() {
+        return (Activity) mActivityLifecycleProvider;
     }
 
     @Provides
     @ActivityScope
-    ActivityLifecycleProvider providerActivityProvider(){
+    ActivityLifecycleProvider providerActivityProvider() {
         return mActivityLifecycleProvider;
     }
 
     @Provides
     @ActivityScope
-    PresenterProvider providerPresenterProvider(){
-        return new PresenterProvider((Activity)mActivityLifecycleProvider,mActivityLifecycleProvider,null,null);
+    PresenterProvider providerPresenterProvider() {
+        return new PresenterProvider((Activity) mActivityLifecycleProvider, mActivityLifecycleProvider, null, null);
     }
 
 }

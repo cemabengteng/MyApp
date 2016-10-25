@@ -1,7 +1,5 @@
 package com.example.plu.myapp;
 
-import android.content.Context;
-
 import com.example.plu.myapp.base.rx.RxApp;
 import com.example.plu.myapp.dagger.component.ApplicationComponent;
 import com.example.plu.myapp.dagger.component.DaggerApplicationComponent;
@@ -12,17 +10,17 @@ import com.example.plu.myapp.dagger.moudle.ApplicationMoudle;
  */
 public class App extends RxApp {
     private static App mApp;
-    private static Context appContext;
     private ApplicationComponent mApplicationComponent;
 
-    public static App getInstance(){return mApp;}
+    public static App getInstance() {
+        return mApp;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (mApp == null){
+        if (mApp == null) {
             mApp = this;
-            appContext = getApplicationContext();
         }
         initApplicationComponent();
 

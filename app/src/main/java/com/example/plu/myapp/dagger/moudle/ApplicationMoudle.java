@@ -1,5 +1,6 @@
 package com.example.plu.myapp.dagger.moudle;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.example.plu.myapp.App;
@@ -14,7 +15,7 @@ import dagger.Provides;
  */
 @Module
 public class ApplicationMoudle {
-    private App app;
+    private Application app;
 
     public ApplicationMoudle(App app) {
         this.app = app;
@@ -22,7 +23,7 @@ public class ApplicationMoudle {
 
     @Provides
     @ApplicationScope
-    @ContextLevel
+    @ContextLevel(ContextLevel.APPLICATION)
     public Context provideContext(){
         return app.getApplicationContext();
     }

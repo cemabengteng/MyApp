@@ -1,6 +1,7 @@
 package com.example.plu.myapp.base.rx;
 
 import android.app.Application;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
 import com.example.plu.myapp.rx.rxlifecycle.ApplicationEvent;
@@ -15,7 +16,8 @@ import rx.subjects.BehaviorSubject;
 public class RxApp extends Application {
     private final BehaviorSubject<ApplicationEvent> lifycycleSubject = BehaviorSubject.create();
 
-
+    @NonNull
+    @CheckResult
     public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ApplicationEvent event) {
         return RxLifecycle.bindUntilEvent(lifycycleSubject, event);
     }

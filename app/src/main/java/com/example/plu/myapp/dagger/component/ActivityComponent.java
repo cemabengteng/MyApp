@@ -14,5 +14,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {ActivityModule.class})
 public interface ActivityComponent extends BaseComponent {
     CommonActivityComponent provideCommonComponent();
+
     MainComponent provideMainComponent();
 }
