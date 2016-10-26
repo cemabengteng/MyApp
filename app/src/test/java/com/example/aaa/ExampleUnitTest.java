@@ -10,7 +10,6 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.functions.Action0;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import xiaofei.library.shelly.Shelly;
 import xiaofei.library.shelly.function.Action1;
@@ -104,30 +103,62 @@ public class ExampleUnitTest {
 
     @Test
     public void testRxjava() {
-        Observable.from(new String[]{"aaa", "bbb"})
-                .map(new Func1<String, String>() {
+        Scheduler scheduler = Schedulers.newThread();
+        System.out.print("scheduler " + scheduler.toString() + "\n");
+        Observable
+                .create(new Observable.OnSubscribe<String>() {
                     @Override
-                    public String call(String s) {
-                        return s + "1";
+                    public void call(Subscriber<? super String> subscriber) {
+                        System.out.print(Thread.currentThread().getName() + "\n");
+                        System.out.print("haha" + "\n");
+                        subscriber.onNext("haha");
                     }
                 })
-                .map(new Func1<String, String>() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler)
+                .doOnSubscribe(new Action0() {
                     @Override
-                    public String call(String s) {
-                        return s+"2";
+                    public void call() {
+                        System.out.print(Thread.currentThread().getName() + "\n");
+                        System.out.print("doOnSubscribe \n");
+                    }
+                })
+                .doOnNext(new rx.functions.Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        System.out.print(Thread.currentThread().getName() + "\n");
+                        System.out.print("do on next \n");
                     }
                 })
                 .subscribe(new rx.functions.Action1<String>() {
                     @Override
                     public void call(String s) {
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.print(s + "\n");
+                        System.out.print(Thread.currentThread().getName() + "\n");
+                        System.out.print(s);
                     }
                 });
+    }
+
+
+    @Test
+    public void testSchedule() {
+        Observable
+                .create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        System.out.print(Thread.currentThread().getName() + "\n");
+                        subscriber.onNext("haha");
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new rx.functions.Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        System.out.print(Thread.currentThread().getName() + "\n");
+                    }
+                });
+
     }
 
 
