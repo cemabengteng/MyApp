@@ -36,9 +36,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     apt developmentDependencies.daggerCompiler
-    def testDependencies = rootProject.ext.testDependencies
+    def testDependencies = rootProject.ext.developmentTestDependencies
     testCompile testDependencies.junit
     testCompile testDependencies.mockito
+//    testCompile testDependencies.robolectric
     def developmentDependencies = rootProject.ext.developmentDependencies
     compile developmentDependencies.rxJava
     compile developmentDependencies.rxAndroid

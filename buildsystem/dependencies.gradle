@@ -21,7 +21,8 @@ ext{
     toyroomVersion = '0.2.8'
 
     junitVersion = '4.12'
-    mockitoVersion = '1.9.5'
+    mockitoVersion = '2.1.0'
+    robolectricVersion = '3.1.1'
 
     developmentDependencies = [
             rxJava                    : "io.reactivex:rxjava:${rxJavaVersion}",
@@ -34,12 +35,14 @@ ext{
             annotation                : "org.glassfish:javax.annotation:${annotationVersion}",
             butterKnife               : "com.jakewharton:butterknife:${butterKnifeVersion}",
             logger                    : "com.orhanobut:logger:${loggerVersion}",
-            toyroom                   : "xiaofei.library:shelly:${toyroomVersion}"
+            toyroom                   : "xiaofei.library:shelly:${toyroomVersion}",
+
     ]
 
-    testDependencies = [
+    developmentTestDependencies = [
             junit                    : "junit:junit:${junitVersion}",
             mockito                  : "org.mockito:mockito-core:${mockitoVersion}",
+            robolectric               : "org.robolectric:robolectric:${robolectricVersion}"
     ]
 
     dataDependencies = [
