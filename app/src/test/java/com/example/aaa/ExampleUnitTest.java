@@ -10,6 +10,7 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.functions.Action0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import xiaofei.library.shelly.Shelly;
 import xiaofei.library.shelly.function.Action1;
@@ -159,6 +160,27 @@ public class ExampleUnitTest {
                     }
                 });
 
+    }
+
+    @Test
+    public void testRxTimer() {
+        Observable
+                .just("haah")
+                .map(new Func1<String, String>() {
+                    @Override
+                    public String call(String s) {
+                        System.out.print("map");
+                        return s;
+                    }
+                })
+//                .delay(2,TimeUnit.SECONDS)
+                .delaySubscription(1, TimeUnit.SECONDS)
+                .subscribe(new rx.functions.Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        System.out.print(s);
+                    }
+                });
     }
 
 
