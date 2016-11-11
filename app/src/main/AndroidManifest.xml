@@ -15,7 +15,10 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".main.MainActivity">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".databinding.DataBindingActivity">
 
@@ -24,13 +27,6 @@
 
         <activity android:name=".love.LoveActivity">
 
-        </activity>
-
-        <activity android:name=".downloadgiftzip.DownLoadGiftTestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
     </application>
