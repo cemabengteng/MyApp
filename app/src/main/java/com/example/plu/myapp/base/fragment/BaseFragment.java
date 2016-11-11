@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by chengXing on 2016/9/14.
  */
 public abstract class BaseFragment extends RxFragment {
-    public Context mContext;
+    protected Context mContext;
 
     @Nullable
     @Override
