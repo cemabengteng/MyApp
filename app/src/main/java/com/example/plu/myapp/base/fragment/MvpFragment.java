@@ -3,13 +3,13 @@ package com.example.plu.myapp.base.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.plu.myapp.base.mvp.BasePresenter;
+import com.example.plu.myapp.base.mvp.MvpPresenter;
 import com.example.plu.myapp.dagger.base.BaseComponent;
 
 /**
  * Created by chengXing on 2016/9/14.
  */
-public abstract class MvpFragment<C extends BaseComponent, P extends BasePresenter> extends DaggerFragment<C> {
+public abstract class MvpFragment<C extends BaseComponent, P extends MvpPresenter> extends DaggerFragment<C> {
 
     private P mPresenter;
 
