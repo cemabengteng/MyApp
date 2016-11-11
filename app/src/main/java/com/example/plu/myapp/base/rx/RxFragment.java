@@ -1,10 +1,10 @@
 package com.example.plu.myapp.base.rx;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.trello.rxlifecycle.FragmentEvent;
