@@ -19,6 +19,7 @@ ext{
     butterKnifeVersion = '7.0.1'
     loggerVersion = '1.15'
     toyroomVersion = '0.2.8'
+    eventbusVersion = '3.0.0'
 
     junitVersion = '4.12'
     mockitoVersion = '2.1.0'
@@ -36,7 +37,7 @@ ext{
             butterKnife               : "com.jakewharton:butterknife:${butterKnifeVersion}",
             logger                    : "com.orhanobut:logger:${loggerVersion}",
             toyroom                   : "xiaofei.library:shelly:${toyroomVersion}",
-
+            eventbus                  : "org.greenrobot:eventbus:${eventbusVersion}",
     ]
 
     developmentTestDependencies = [

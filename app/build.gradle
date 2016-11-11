@@ -51,8 +51,12 @@ dependencies {
     compile developmentDependencies.butterKnife
     compile developmentDependencies.logger
     compile developmentDependencies.toyroom
+    compile developmentDependencies.eventbus
     compile project(':domain')
     compile project(':data')
     compile project(':view')
     compile files('libs/ant.jar')
+
+    //学习okhttputils的下载代码
+    compile 'com.zhy:okhttputils:2.6.2'
 }
