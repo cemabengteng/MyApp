@@ -4,6 +4,8 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * Created by liuj on 2016/2/22.
  * tab构造类
@@ -47,5 +49,12 @@ public class TabBuilder {
             return new Tab().icon(((IconPagerAdapter) adapter).getIcon(pos));
         }
         return new Tab().title((String) adapter.getPageTitle(pos));
+    }
+
+    public static Tab createTabByDataList(int i, List<String> lists) {
+        if (lists != null && lists.size() > 0) {
+            return new Tab().title(lists.get(i));
+        }
+        return new Tab().title("");
     }
 }

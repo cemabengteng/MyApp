@@ -26,4 +26,5 @@ dependencies {
     def viewDependencies = rootProject.ext.viewDependencies
     compile viewDependencies.rxJava
     compile viewDependencies.rxAndroid
+    compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.1'
 }

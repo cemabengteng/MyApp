@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -23,10 +24,12 @@ import android.widget.TextView;
 
 import com.example.view.R;
 
+import java.util.List;
+
 /**
  * Created by liuj on 2016/2/22.
  */
-public class StripPagerTabLayout extends HorizontalScrollView implements PagerTabLayout {
+public class GiftStripPagerTabLayout extends HorizontalScrollView implements PagerTabLayout {
 
     private static final int DEFAULT_VISIBLE_COUNT = 4;
 
@@ -49,15 +52,15 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
     private int pagerState;
     private boolean isDrag;
 
-    public StripPagerTabLayout(Context context) {
+    public GiftStripPagerTabLayout(Context context) {
         this(context, null);
     }
 
-    public StripPagerTabLayout(Context context, AttributeSet attrs) {
+    public GiftStripPagerTabLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StripPagerTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GiftStripPagerTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initContent(context, attrs, defStyleAttr);
     }
@@ -72,17 +75,17 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
     }
 
     private void handleAttrs(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.StripPagerTabLayout);
-        visibleCount = typedArray.getInt(R.styleable.StripPagerTabLayout_StripPager_visible_count, DEFAULT_VISIBLE_COUNT);
-        titleColors = typedArray.getColorStateList(R.styleable.StripPagerTabLayout_StripPager_text_color);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GiftStripPagerTabLayout);
+        visibleCount = typedArray.getInt(R.styleable.GiftStripPagerTabLayout_StripPager_visible_count, DEFAULT_VISIBLE_COUNT);
+        titleColors = typedArray.getColorStateList(R.styleable.GiftStripPagerTabLayout_StripPager_text_color);
         if (titleColors == null) {
-            int titleSelectedColor = typedArray.getColor(R.styleable.StripPagerTabLayout_StripPager_text_selected_color, getResources().getColor(R.color.default_title_selected_color));
-            int titleUnselectedColor = typedArray.getColor(R.styleable.StripPagerTabLayout_StripPager_text_default_color, getResources().getColor(R.color.default_title_unselected_color));
+            int titleSelectedColor = typedArray.getColor(R.styleable.GiftStripPagerTabLayout_StripPager_text_selected_color, getResources().getColor(R.color.default_title_selected_color));
+            int titleUnselectedColor = typedArray.getColor(R.styleable.GiftStripPagerTabLayout_StripPager_text_default_color, getResources().getColor(R.color.default_title_unselected_color));
             titleColors = createColorStateList(titleUnselectedColor, titleSelectedColor);
         }
-        titleTextSize = typedArray.getDimensionPixelSize(R.styleable.StripPagerTabLayout_StripPager_text_size, 0);
-        tabBackgroundResourceId = typedArray.getResourceId(R.styleable.StripPagerTabLayout_StripPagerIndicator_tab_background, -1);
-        gravity = typedArray.getInt(R.styleable.StripPagerTabLayout_StripPagerIndicator_gravity, GRAVITY_LEFT);
+        titleTextSize = typedArray.getDimensionPixelSize(R.styleable.GiftStripPagerTabLayout_StripPager_text_size, 0);
+        tabBackgroundResourceId = typedArray.getResourceId(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_tab_background, -1);
+        gravity = typedArray.getInt(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_gravity, GRAVITY_LEFT);
         typedArray.recycle();
     }
 
@@ -103,6 +106,7 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
         if (childTab.getLeft() != getScrollX()) {
             smoothScrollTo(childTab.getLeft(), 0);
         }
+        indicatorLinearLayout.setSelectedTab(pos);
     }
 
     @Override
@@ -123,6 +127,21 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
         requestLayout();
     }
 
+    public void notifyDataSetChangedWithoutAdapter() {
+        indicatorLinearLayout.removeAllViews();
+        if (mDataLists != null && mDataLists.size() > 0) {
+            for (int i = 0; i < mDataLists.size(); i++) {
+                Tab tab = TabBuilder.createTabByDataList(i, mDataLists);
+                addTab(tab);
+            }
+        }
+
+        scrollTo(0, 0);
+        mCurrentPos = 0;
+        indicatorLinearLayout.reset();
+        requestLayout();
+    }
+
     @Override
     public void setViewPager(ViewPager viewPager) {
         if (viewPager == null) {
@@ -131,6 +150,13 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
         this.mViewPager = viewPager;
         viewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
+    }
+
+    private List<String> mDataLists;
+
+    public void setData(List<String> list) {
+        mDataLists = list;
+        notifyDataSetChangedWithoutAdapter();
     }
 
     @Override
@@ -215,20 +241,12 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
             @Override
             public void onClick(View v) {
                 int pos = indicatorLinearLayout.indexOfChild(v);
-                //如果点击当前tab则抛出点击事件
-                if (pos == mCurrentPos) {
-                    if (onTabClickListener != null) {
-                        onTabClickListener.onTabClickListener(tab, pos);
-                    }
+                if (onTabClickListener != null) {
+                    onTabClickListener.onTabClickListener(tab, pos);
                 }
-                //优化pageIndicator滑动，当点击的tab间隔大于3时，不使用smoothScroll
-                boolean smoothScroll = Math.abs(pos - mCurrentPos) < 3;
                 mCurrentPos = pos;
-                if (smoothScroll) {
-                    mViewPager.setCurrentItem(mCurrentPos);
-                } else {
-                    mViewPager.setCurrentItem(mCurrentPos, false);
-                }
+                setCurrentItem(mCurrentPos);
+                indicatorLinearLayout.setSelectedTab(mCurrentPos);
 
             }
         });
@@ -291,14 +309,14 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
         public IndicatorLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
             Resources resources = context.getResources();
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.StripPagerTabLayout);
-            color = typedArray.getColor(R.styleable.StripPagerTabLayout_StripPagerIndicator_color, resources.getColor(R.color.default_strip_indicator_color));
-            hideIndicator = typedArray.getBoolean(R.styleable.StripPagerTabLayout_StripPagerIndicator_hide_indicator, false);
-            indicatorPadding = typedArray.getDimensionPixelSize(R.styleable.StripPagerTabLayout_StripPagerIndicator_padding, 0);
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GiftStripPagerTabLayout);
+            color = typedArray.getColor(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_color, resources.getColor(R.color.default_strip_indicator_color));
+            hideIndicator = typedArray.getBoolean(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_hide_indicator, false);
+            indicatorPadding = typedArray.getDimensionPixelSize(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_padding, 0);
             if (!hideIndicator) {
-                indicatorMode = typedArray.getInt(R.styleable.StripPagerTabLayout_StripPagerIndicator_width_mode, INDICATOR_FLEX_WIDTH);
-                height = typedArray.getDimensionPixelOffset(R.styleable.StripPagerTabLayout_StripPagerIndicator_height, resources.getDimensionPixelOffset(R.dimen.default_strip_indicator_height));
-                width = typedArray.getDimensionPixelOffset(R.styleable.StripPagerTabLayout_StripPagerIndicator_width, 0);
+                indicatorMode = typedArray.getInt(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_width_mode, INDICATOR_FLEX_WIDTH);
+                height = typedArray.getDimensionPixelOffset(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_height, resources.getDimensionPixelOffset(R.dimen.default_strip_indicator_height));
+                width = typedArray.getDimensionPixelOffset(R.styleable.GiftStripPagerTabLayout_StripPagerIndicator_width, 0);
                 if (width == 0) {
                     if (indicatorMode != INDICATOR_FILL_WIDTH) {
                         indicatorMode = INDICATOR_FLEX_WIDTH;
@@ -355,6 +373,8 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
             }
         }
 
+        private View lastView = null;
+
         private void setSelectedTab(View tabView) {
             if (currentTabView != tabView) {
                 if (null != currentTabView) {
@@ -363,6 +383,12 @@ public class StripPagerTabLayout extends HorizontalScrollView implements PagerTa
                 tabView.setSelected(true);
                 currentTabView = tabView;
             }
+
+            if (lastView != null) {
+                lastView.setBackgroundColor(Color.WHITE);
+            }
+            tabView.setBackgroundColor(Color.BLACK);
+            lastView = tabView;
         }
 
         private void setSelectedTab(int selectedPos) {

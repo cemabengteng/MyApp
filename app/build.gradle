@@ -28,7 +28,7 @@ android {
 
     //双向数据绑定
     dataBinding{
-        enabled true;
+        enabled false;
     }
 
 }
@@ -52,6 +52,7 @@ dependencies {
     compile developmentDependencies.logger
     compile developmentDependencies.toyroom
     compile developmentDependencies.eventbus
+    compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.1'
     compile project(':domain')
     compile project(':data')
     compile project(':view')

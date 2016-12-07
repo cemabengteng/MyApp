@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical">
+    android:layout_height="match_parent">
+
+    <com.example.view.StripPagerTabLayout.GiftStripPagerTabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:StripPagerIndicator_hide_indicator="true"
+        android:saveEnabled="false"/>
+
+
+    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+        android:layout_below="@+id/tab"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/heart_wave_color12"
+        app:rvp_singlePageFling="true"
+        app:rvp_triggerOffset="0.1"/>
+
 
 </RelativeLayout>

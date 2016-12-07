@@ -11,7 +11,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="StripPagerTabLayout">
+    <declare-styleable name="GiftStripPagerTabLayout">
         <attr name="StripPager_visible_count" format="integer" />
         <attr name="StripPagerIndicator_color" format="color" />
         <attr name="StripPager_text_size" format="dimension" />
