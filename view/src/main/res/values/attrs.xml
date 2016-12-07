@@ -11,4 +11,29 @@
     </declare-styleable>
 
 
+    <declare-styleable name="StripPagerTabLayout">
+        <attr name="StripPager_visible_count" format="integer" />
+        <attr name="StripPagerIndicator_color" format="color" />
+        <attr name="StripPager_text_size" format="dimension" />
+        <attr name="StripPager_text_color" format="color|reference" />
+        <attr name="StripPager_text_default_color" format="color" />
+        <attr name="StripPager_text_selected_color" format="color" />
+        <attr name="StripPagerIndicator_height" format="dimension" />
+        <attr name="StripPagerIndicator_width" format="dimension" />
+        <!-- 指示条宽度样式 -->
+        <attr name="StripPagerIndicator_width_mode" format="integer">
+            <!-- 根据文字宽度变化 -->
+            <flag name="flex" value="0" />
+            <!-- 固定宽度 需要指定StripPagerIndicator_width-->
+            <flag name="fix" value="1" />
+            <!-- 铺满 -->
+            <flag name="fill" value="2" />
+        </attr>
+        <attr name="StripPagerIndicator_padding" format="dimension" />
+        <attr name="StripPagerIndicator_tab_background" format="reference" />
+        <attr name="StripPagerIndicator_gravity" format="integer" />
+        <attr name="StripPagerIndicator_hide_indicator" format="boolean" />
+    </declare-styleable>
+
+
 </resources>

@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="default_strip_indicator_color">#FF7E00</color>
+    <color name="default_title_selected_color">@color/default_strip_indicator_color</color>
+    <color name="default_title_unselected_color">#2d3c4e</color>
+
+    <color name="default_tab_theme_color1">#ff7e00</color>
+    <color name="default_tab_theme_color2">#ffffff</color>
+    <color name="default_tab_txt_color">@color/default_tab_theme_color1</color>
+    <color name="default_tab_txt_selected_color">@color/default_tab_theme_color2</color>
+    <color name="default_divider_color">@color/default_tab_theme_color1</color>
     <!-- 点赞爆心相关颜色 -->
     <color name="heart_wave_color1">#FF6B00</color>
     <color name="heart_wave_color2">#FFA600</color>

@@ -38,4 +38,16 @@
         <attr name="bezierFactor" format="integer" />
         <attr name="anim_duration" format="integer" />
     </declare-styleable>
+
+
+    <style name="default_tab_img_style">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="default_tab_txt_style">
+        <item name="android:textSize">12sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

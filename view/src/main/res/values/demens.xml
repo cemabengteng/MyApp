@@ -9,4 +9,7 @@
 
     <dimen name="heart_size_height">27.3dp</dimen>
     <dimen name="heart_size_width">32.5dp</dimen>
+
+    <dimen name="default_strip_indicator_height">3dp</dimen>
+    <dimen name="default_strip_tablayout_padding">0dp</dimen>
 </resources>
