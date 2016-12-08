@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Parcelable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -39,8 +38,6 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
 
 
     private OnTabClickListener onTabClickListener;
-    private ViewPager.OnPageChangeListener mPageChangeListener;
-    private ViewPager mViewPager;
     private IndicatorLinearLayout indicatorLinearLayout;
 
     private int visibleCount;
@@ -50,8 +47,6 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
     private ColorStateList titleColors;
     private int tabBackgroundResourceId;
     private int gravity;
-    private int pagerState;
-    private boolean isDrag;
     private int mMaxTabNum;
 
     public GiftStripPagerTabLayout(Context context) {
@@ -92,13 +87,13 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
     }
 
 
-    @Override
-    public void setOnPageChangedListener(ViewPager.OnPageChangeListener listener) {
-        mPageChangeListener = listener;
-    }
-
     public void setOnTabClickListener(OnTabClickListener onTabClickListener) {
         this.onTabClickListener = onTabClickListener;
+    }
+
+    @Override
+    public void setOnPageChangedListener(ViewPager.OnPageChangeListener listener) {
+
     }
 
     @Override
@@ -113,20 +108,7 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
 
     @Override
     public void notifyDataSetChanged() {
-        indicatorLinearLayout.removeAllViews();
-        if (mViewPager != null) {
-            PagerAdapter pagerAdapter = mViewPager.getAdapter();
-            if (pagerAdapter != null) {
-                for (int i = 0; i < pagerAdapter.getCount(); i++) {
-                    Tab tab = TabBuilder.createTab(i, pagerAdapter, indicatorLinearLayout);
-                    addTab(tab);
-                }
-            }
-        }
-        scrollTo(0, 0);
-        mCurrentPos = 0;
-        indicatorLinearLayout.reset();
-        requestLayout();
+
     }
 
     public void notifyDataSetChangedWithoutAdapter() {
@@ -146,12 +128,7 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
 
     @Override
     public void setViewPager(ViewPager viewPager) {
-        if (viewPager == null) {
-            return;
-        }
-        this.mViewPager = viewPager;
-        viewPager.addOnPageChangeListener(this);
-        notifyDataSetChanged();
+
     }
 
     private List<String> mDataLists;
@@ -163,28 +140,18 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (mPageChangeListener != null) {
-            mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-        }
-        indicatorLinearLayout.updateIndicatorByTabPos(position, positionOffset);
+
     }
 
 
     @Override
     public void onPageSelected(int position) {
-        if (mPageChangeListener != null) {
-            mPageChangeListener.onPageSelected(position);
-        }
-        setCurrentItem(position);
-        indicatorLinearLayout.setSelectedTab(position);
+
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (mPageChangeListener != null) {
-            mPageChangeListener.onPageScrollStateChanged(state);
-        }
-        pagerState = state;
+
     }
 
     @Override
@@ -205,9 +172,6 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
         super.onRestoreInstanceState(state);
     }
 
-    private boolean isDrag() {
-        return isDrag;
-    }
 
     /**
      * 调整tabView的宽度
@@ -411,11 +375,6 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
             setSelectedTab(tabView);
         }
 
-        private void updateIndicatorByTabPos(int selectedPos, float offset) {
-            this.selectedPos = selectedPos;
-            this.selectedOffset = offset;
-            updateIndicator();
-        }
 
 
         private void updateIndicator() {
