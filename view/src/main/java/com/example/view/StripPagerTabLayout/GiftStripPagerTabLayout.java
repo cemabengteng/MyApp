@@ -35,6 +35,7 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
 
     private static final int GRAVITY_LEFT = 0;
     private static final int GRAVITY_CENTER = 1;
+    private static final int OFFSET_VALUE = 8;  //当标签数量达到最大数量时，每个tab需要的偏移量
 
 
     private OnTabClickListener onTabClickListener;
@@ -51,6 +52,7 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
     private int gravity;
     private int pagerState;
     private boolean isDrag;
+    private int mMaxTabNum;
 
     public GiftStripPagerTabLayout(Context context) {
         this(context, null);
@@ -215,7 +217,12 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
     private void adjustTabViewWidth(int newTabLayoutWidth) {
         int newTabViewWidth = newTabLayoutWidth / visibleCount;
         if (mTabLayoutWidth != newTabViewWidth && newTabViewWidth > 0) {
-            mTabLayoutWidth = newTabViewWidth;
+            if (visibleCount == mMaxTabNum){
+                float v = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OFFSET_VALUE, getResources().getDisplayMetrics());
+                mTabLayoutWidth = newTabViewWidth - (int)v;
+            }else {
+                mTabLayoutWidth = newTabViewWidth;
+            }
             for (int i = 0; i < indicatorLinearLayout.getChildCount(); i++) {
                 View tabView = indicatorLinearLayout.getChildAt(i);
                 if (tabView != null) {
@@ -274,6 +281,14 @@ public class GiftStripPagerTabLayout extends HorizontalScrollView implements Pag
         colors[i] = selectedColor;
 
         return new ColorStateList(states, colors);
+    }
+
+    /**
+     * 设置tab标签的最大数量
+     * @param maxTabNum
+     */
+    public void setMaxTabNum(int maxTabNum) {
+        mMaxTabNum = maxTabNum;
     }
 
 

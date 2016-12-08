@@ -51,6 +51,7 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
         lists.add("标签七");
         lists.add("标签八");
         mTab.setData(lists);
+        mTab.setMaxTabNum(5);
         if (lists.size() <= 5) {
             mTab.setVisibleTabCount(lists.size());
         } else {
