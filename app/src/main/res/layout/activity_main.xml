@@ -3,25 +3,51 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/test">
 
-    <com.example.view.StripPagerTabLayout.GiftStripPagerTabLayout
-        android:id="@+id/tab"
+    <com.wonderkiln.blurkit.BlurLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        app:StripPagerIndicator_hide_indicator="true"
-        android:saveEnabled="false"/>
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.view.StripPagerTabLayout.GiftStripPagerTabLayout
+                android:id="@+id/tab"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:saveEnabled="false"
+                app:StripPagerIndicator_hide_indicator="true"/>
 
 
-    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
-        android:layout_below="@+id/tab"
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/heart_wave_color12"
-        app:rvp_singlePageFling="true"
-        app:rvp_triggerOffset="0.1"/>
+            <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/tab"
+                app:rvp_singlePageFling="true"
+                app:rvp_triggerOffset="0.1"/>
+
+        </RelativeLayout>
+
+    </com.wonderkiln.blurkit.BlurLayout>
+
+    <com.wonderkiln.blurkit.BlurLayout
+        android:id="@+id/blurLayout"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="BlurKit!"
+            android:textColor="@android:color/white"/>
+
+    </com.wonderkiln.blurkit.BlurLayout>
 
 
 </RelativeLayout>

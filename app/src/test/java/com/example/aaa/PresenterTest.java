@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -108,5 +109,42 @@ public class PresenterTest {
 
         return hex.toString();
     }
+
+
+    //保留两位小数测试用例
+    @Test
+    public void testTwo() {
+//        System.out.print(formatYuanBao(2, 111.00556, false) + "\n");
+//        System.out.print(formatBalance(111.0055));
+
+//        String s = "aaa,bbb,ccc";
+//        String[] split = s.split(",");
+//        for (int i = 0; i < split.length; i++) {
+//            System.out.print(split[i]);
+//        }
+//        System.out.print(split.length);
+
+//        System.out.print(formatRedBag(3.0001));
+
+        String s = "aaa_0001.png";
+        int i = s.lastIndexOf("_");
+        int j = s.lastIndexOf(".");
+        String substring = s.substring(i + 1, j);
+        System.out.print(substring);
+    }
+
+    public static String formatRedBag(double content) {
+        if (content < 0) return "0";
+        content = content * 100;
+        BigDecimal b = new BigDecimal(content);
+        double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        int i = (int) f1;
+        if (i == f1) {
+            return String.valueOf(i);
+        } else {
+            return String.valueOf(f1);
+        }
+    }
+
 
 }
