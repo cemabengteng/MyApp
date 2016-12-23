@@ -20,6 +20,8 @@ ext{
     loggerVersion = '1.15'
     toyroomVersion = '0.2.8'
     eventbusVersion = '3.0.0'
+    blurkitVersion = '1.0.0'
+    RecyclerViewPagerVersion = 'v1.1.1'
 
     junitVersion = '4.12'
     mockitoVersion = '2.1.0'
@@ -38,6 +40,8 @@ ext{
             logger                    : "com.orhanobut:logger:${loggerVersion}",
             toyroom                   : "xiaofei.library:shelly:${toyroomVersion}",
             eventbus                  : "org.greenrobot:eventbus:${eventbusVersion}",
+            blurkit                   : "com.wonderkiln:blurkit:${blurkitVersion}",
+            RecyclerViewPager         : "com.github.lsjwzh.RecyclerViewPager:lib:${RecyclerViewPagerVersion}",
     ]
 
     developmentTestDependencies = [
