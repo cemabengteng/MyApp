@@ -1,5 +1,6 @@
 package com.example.plu.myapp.dagger.component;
 
+import com.example.plu.myapp.biggift.LargeGiftMainComponent;
 import com.example.plu.myapp.dagger.base.BaseComponent;
 import com.example.plu.myapp.dagger.moudle.ActivityModule;
 import com.example.plu.myapp.dagger.scope.ActivityScope;
@@ -16,4 +17,6 @@ public interface ActivityComponent extends BaseComponent {
     CommonActivityComponent provideCommonComponent();
 
     MainComponent provideMainComponent();
+
+    LargeGiftMainComponent provideLargeGiftMainComponent();
 }
