@@ -3,38 +3,35 @@ package com.example.plu.myapp.base.mvp;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Created by chengXing on 2016/9/13.
  */
 public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
-    private WeakReference<V> mViewRef;
-
-    @UiThread
-    @Nullable
-    public V getView(){
-        return mViewRef != null ? null : mViewRef.get();
-    }
-
+    private ViewHolder<V> viewHolder;
     @UiThread
     @Override
     public void attachView(V view) {
-        mViewRef = new WeakReference<>(view);
+        viewHolder = new ViewHolder<>(view);
     }
+
+
+    @UiThread
+    @Nullable
+    public V getView() {
+        return viewHolder == null ? null : viewHolder.getView();
+    }
+
 
     @UiThread
     public boolean isViewAttached() {
-        return mViewRef != null && mViewRef.get() != null;
+        return viewHolder != null && viewHolder.isViewAttached();
     }
 
     @UiThread
     @Override
     public void detachView() {
-        if (mViewRef != null){
-            mViewRef.clear();
-            mViewRef = null;
-        }
+        if (viewHolder != null)
+            viewHolder.detachView();
     }
 }
