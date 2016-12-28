@@ -1,4 +1,4 @@
-package com.example.plu.myapp.biggift;
+package com.example.plu.myapp.biggift.main;
 
 import com.example.plu.myapp.dagger.base.BaseComponent;
 import com.example.plu.myapp.dagger.scope.ActivityScope;

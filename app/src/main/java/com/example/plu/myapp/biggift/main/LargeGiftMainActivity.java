@@ -1,5 +1,6 @@
-package com.example.plu.myapp.biggift;
+package com.example.plu.myapp.biggift.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
 import com.example.plu.myapp.biggift.bean.LargeGift;
+import com.example.plu.myapp.biggift.setjson.SetJsonActivity;
 import com.example.plu.myapp.dagger.component.ActivityComponent;
 import com.example.plu.myapp.util.PluLog;
 
@@ -85,6 +87,9 @@ public class LargeGiftMainActivity extends MvpActivity<LargeGiftMainComponent, L
             @Override
             public void onItemClick(View view, int position) {
                 PluLog.d("position: " + mData.get(position).getPath());
+                Intent intent = new Intent(LargeGiftMainActivity.this, SetJsonActivity.class);
+                intent.putExtra("test", "test");
+                startActivity(intent);
             }
         });
     }
