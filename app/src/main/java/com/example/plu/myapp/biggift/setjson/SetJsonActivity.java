@@ -1,6 +1,8 @@
 package com.example.plu.myapp.biggift.setjson;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -9,12 +11,14 @@ import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
 import com.example.plu.myapp.biggift.bean.BigGiftConfigBean;
 import com.example.plu.myapp.biggift.bean.LargeGift;
+import com.example.plu.myapp.biggift.show.ShowActivity;
 import com.example.plu.myapp.dagger.component.CommonActivityComponent;
 import com.example.plu.myapp.util.PluLog;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by chengXing on 2016/12/28.
@@ -56,6 +60,8 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
     @Bind(R.id.et_display_frame_width_offset)
     EditText etDisplayFrameWidthOffset;
 
+    private LargeGift largeGift;
+
     @Override
     protected void initInject() {
         initCommon().inject(this);
@@ -68,7 +74,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
 
     @Override
     protected void initData(Bundle state) {
-        LargeGift largeGift = getIntent().getParcelableExtra(PATH);
+        largeGift = getIntent().getParcelableExtra(PATH);
         PluLog.d(largeGift);
         mPersenter.loadJson(largeGift);
     }
@@ -108,5 +114,21 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         etEdgesCenterXLandOffset.setText(String.valueOf(bean.getEdges().getCenterX().getLandOffset()));
         etEdgesCenterXPortMultiby.setText(String.valueOf(bean.getEdges().getCenterX().getPortMultiby()));
         etEdgesCenterXPortOffset.setText(String.valueOf(bean.getEdges().getCenterX().getPortOffset()));
+    }
+
+    @OnClick(R.id.bt_start)
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_start:
+                boolean isHaveAni = mPersenter.checkAniFile();
+                if (isHaveAni) {
+                    Intent intent = new Intent(SetJsonActivity.this, ShowActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(mContext, "没找到ani文件", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
     }
 }

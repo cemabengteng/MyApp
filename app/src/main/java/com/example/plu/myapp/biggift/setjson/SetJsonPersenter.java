@@ -25,6 +25,8 @@ public class SetJsonPersenter extends BasePresenter<SetJsonView> {
 
     public static final String DEFAULT_CONFIG = "config.txt";
 
+    private boolean isHaveAni = false;
+
     @Inject
     public SetJsonPersenter(PresenterProvider presenterProvider) {
         super(presenterProvider);
@@ -40,10 +42,12 @@ public class SetJsonPersenter extends BasePresenter<SetJsonView> {
                         if (file.isDirectory()) {
                             File[] files = file.listFiles();
                             for (File f : files) {
+                                if (f.getName().toLowerCase().endsWith(".ani")) {
+                                    isHaveAni = true;
+                                }
                                 if (f.getName().toLowerCase().endsWith(DEFAULT_CONFIG)) {
                                     String json = FileUtils.getFileJson(f.getPath());
                                     bean = new Gson().fromJson(json, BigGiftConfigBean.class);
-                                    break;
                                 }
                             }
                         }
@@ -72,5 +76,10 @@ public class SetJsonPersenter extends BasePresenter<SetJsonView> {
                         }
                     }
                 });
+    }
+
+
+    public boolean checkAniFile() {
+        return isHaveAni;
     }
 }
