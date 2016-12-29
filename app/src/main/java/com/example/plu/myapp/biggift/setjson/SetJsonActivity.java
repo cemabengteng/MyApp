@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
+import com.example.plu.myapp.biggift.bean.BigGiftConfigBean;
 import com.example.plu.myapp.biggift.bean.LargeGift;
 import com.example.plu.myapp.dagger.component.CommonActivityComponent;
 import com.example.plu.myapp.util.PluLog;
@@ -17,7 +18,6 @@ import javax.inject.Inject;
 public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJsonPersenter> implements SetJsonView {
 
     public static String PATH = "swf_path";
-    private static final String DEFAULT_CONFIG = "config.txt";
 
     @Inject
     SetJsonPersenter mPersenter;
@@ -36,11 +36,18 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
     protected void initData(Bundle state) {
         LargeGift largeGift = getIntent().getParcelableExtra(PATH);
         PluLog.d(largeGift);
-
+        mPersenter.loadJson(largeGift);
     }
 
     @Override
     protected void initView() {
         setContentView(R.layout.activity_set_json);
+    }
+
+    @Override
+    public void onLoadBigGiftJson(boolean isSuccess, BigGiftConfigBean bean) {
+        if (isSuccess) {
+            PluLog.d(bean);
+        }
     }
 }
