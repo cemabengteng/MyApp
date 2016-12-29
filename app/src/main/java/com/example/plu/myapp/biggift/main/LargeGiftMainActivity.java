@@ -2,7 +2,6 @@ package com.example.plu.myapp.biggift.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
 import com.example.plu.myapp.biggift.bean.LargeGift;
 import com.example.plu.myapp.biggift.setjson.SetJsonActivity;
-import com.example.plu.myapp.dagger.component.ActivityComponent;
+import com.example.plu.myapp.dagger.component.CommonActivityComponent;
 
 import java.util.List;
 
@@ -28,10 +27,11 @@ import butterknife.Bind;
  * Created by chengXing on 2016/12/28.
  */
 
-public class LargeGiftMainActivity extends MvpActivity<LargeGiftMainComponent, LargeGiftMainPresenter> implements LargeGiftMainView {
+public class LargeGiftMainActivity extends MvpActivity<CommonActivityComponent, LargeGiftMainPresenter> implements LargeGiftMainView {
 
     @Inject
     LargeGiftMainPresenter mPresenter;
+
     @Bind(R.id.recy_all_gifts)
     RecyclerView recyAllGifts;
 
@@ -39,15 +39,13 @@ public class LargeGiftMainActivity extends MvpActivity<LargeGiftMainComponent, L
     private List<LargeGift> mData;
 
     @Override
-    protected LargeGiftMainPresenter createPresenter() {
-        return mPresenter;
+    protected void initInject() {
+        initCommon().inject(this);
     }
 
     @Override
-    public LargeGiftMainComponent initComponent(@NonNull ActivityComponent component) {
-        LargeGiftMainComponent largeGiftMainComponent = component.provideLargeGiftMainComponent();
-        largeGiftMainComponent.inject(this);
-        return largeGiftMainComponent;
+    protected LargeGiftMainPresenter createPresenter() {
+        return mPresenter;
     }
 
     @Override
