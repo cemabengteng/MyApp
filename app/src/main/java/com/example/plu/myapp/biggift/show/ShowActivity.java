@@ -7,6 +7,7 @@ import android.view.View;
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.BaseActivity;
 import com.example.plu.myapp.biggift.bean.BigGiftConfigBean;
+import com.example.plu.myapp.util.PluLog;
 import com.funzio.pure2D.BaseScene;
 import com.funzio.pure2D.BaseStage;
 import com.funzio.pure2D.Scene;
@@ -41,6 +42,10 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
     @Override
     protected void initData(Bundle state) {
         final BigGiftConfigBean giftConfigBean = (BigGiftConfigBean) getIntent().getSerializableExtra(BEAN);
+
+        if (!LWF.loadLibrary()) {
+            PluLog.e("ERROR: loadLibrary");
+        }
 
         // 创建manager
         mLWFManager = new LWFManager();
