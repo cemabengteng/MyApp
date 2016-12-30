@@ -1,1 +1,1 @@
-include ':app', ':data', ':domain', ':view'
+include ':app', ':data', ':domain', ':view', ':pure2d'
