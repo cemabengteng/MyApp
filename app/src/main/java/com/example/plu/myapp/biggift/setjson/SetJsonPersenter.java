@@ -42,16 +42,19 @@ public class SetJsonPersenter extends BasePresenter<SetJsonView> {
                         if (file.isDirectory()) {
                             File[] files = file.listFiles();
                             for (File f : files) {
-                                if (f.getName().toLowerCase().endsWith(".ani")) {
-                                    isHaveAni = true;
-                                    bean.setPath(f.getPath());
-                                }
                                 if (f.getName().toLowerCase().endsWith(DEFAULT_CONFIG)) {
                                     String json = FileUtils.getFileJson(f.getPath());
                                     bean = new Gson().fromJson(json, BigGiftConfigBean.class);
                                 }
                             }
+                            for (File f : files) {
+                                if (f.getName().toLowerCase().endsWith(".ani")) {
+                                    isHaveAni = true;
+                                    bean.setName(f.getName());
+                                }
+                            }
                         }
+                        bean.setPath(largeGift.getPath());
                         return bean;
                     }
                 })

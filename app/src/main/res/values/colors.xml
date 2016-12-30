@@ -6,4 +6,12 @@
 
     <color name="transparent">#00000000</color>
     <color name="font_color_66">#666666</color>
+
+    <color name="dark_bg_font">#aaffffff</color>
+    <color name="deepgray">#FF9DA6AD</color>
+    <color name="black_half_Alpha">#80000000</color>
+    <color name="suipai_username_color">#f8e71c</color>
+    <color name="rank_first_background">#ff7e00</color>
+    <color name="rank_second_background">#ffa400</color>
+    <color name="rank_third_background">#ffd700</color>
 </resources>
