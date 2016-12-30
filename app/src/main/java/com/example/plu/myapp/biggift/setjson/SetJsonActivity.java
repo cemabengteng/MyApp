@@ -61,6 +61,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
     EditText etDisplayFrameWidthOffset;
 
     private LargeGift largeGift;
+    private BigGiftConfigBean bigGiftConfigBean;
 
     @Override
     protected void initInject() {
@@ -94,6 +95,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
     }
 
     private void initJson(BigGiftConfigBean bean) {
+        this.bigGiftConfigBean = bean;
         etTextImgName.setText(bean.getTextImgName());
         etTextFontSize.setText(String.valueOf(bean.getTextSize()));
         if (bean.isRandom()) {
@@ -123,6 +125,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
                 boolean isHaveAni = mPersenter.checkAniFile();
                 if (isHaveAni) {
                     Intent intent = new Intent(SetJsonActivity.this, ShowActivity.class);
+                    intent.putExtra(ShowActivity.BEAN, bigGiftConfigBean);
                     startActivity(intent);
                 } else {
                     Toast.makeText(mContext, "没找到ani文件", Toast.LENGTH_SHORT).show();

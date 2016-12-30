@@ -44,6 +44,7 @@ public class SetJsonPersenter extends BasePresenter<SetJsonView> {
                             for (File f : files) {
                                 if (f.getName().toLowerCase().endsWith(".ani")) {
                                     isHaveAni = true;
+                                    bean.setPath(f.getPath());
                                 }
                                 if (f.getName().toLowerCase().endsWith(DEFAULT_CONFIG)) {
                                     String json = FileUtils.getFileJson(f.getPath());

@@ -106,7 +106,7 @@ public class BigGiftConfigBean implements Serializable {
         this.textImgName = textImgName;
     }
 
-    public static class DisplayFrameBean {
+    public static class DisplayFrameBean implements Serializable {
         /**
          * height : {"multiby":0.8,"offset":0}
          * width : {"multiby":0.8,"offset":0}
@@ -131,7 +131,7 @@ public class BigGiftConfigBean implements Serializable {
             this.width = width;
         }
 
-        public static class HeightBean {
+        public static class HeightBean implements Serializable {
             /**
              * multiby : 0.8
              * offset : 0
@@ -157,7 +157,7 @@ public class BigGiftConfigBean implements Serializable {
             }
         }
 
-        public static class WidthBean {
+        public static class WidthBean implements Serializable {
             /**
              * multiby : 0.8
              * offset : 0
@@ -184,7 +184,7 @@ public class BigGiftConfigBean implements Serializable {
         }
     }
 
-    public static class EdgesBean {
+    public static class EdgesBean implements Serializable {
         /**
          * bottom : {"landMultiby":0,"landOffset":0,"portMultiby":0,"portOffset":0}
          * centerX : {"landMultiby":0,"landOffset":0,"portMultiby":0,"portOffset":0}
@@ -249,7 +249,7 @@ public class BigGiftConfigBean implements Serializable {
             this.top = top;
         }
 
-        public static class SizeBean {
+        public static class SizeBean implements Serializable {
             private double landMultiby;
             private int landOffset;
             private double portMultiby;
@@ -289,7 +289,7 @@ public class BigGiftConfigBean implements Serializable {
         }
     }
 
-    public static class OrignFramBean {
+    public static class OrignFramBean implements Serializable {
         /**
          * height : 100
          * width : 100
