@@ -34,7 +34,9 @@
         </activity>
 
         <activity android:name=".biggift.setjson.SetJsonActivity"/>
-        <activity android:name=".biggift.show.ShowActivity"/>
+        <activity
+            android:name=".biggift.show.ShowActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
     </application>
 
