@@ -40,7 +40,7 @@ public class LargeGiftMainPresenter extends BasePresenter<LargeGiftMainView> {
                         if (file.exists() && file.isDirectory()) {
                             File[] files = file.listFiles();
                             if (files != null && files.length > 0) {
-                                for (int i = 0; i < files.length; i++) {
+                                for (int i =     0; i < files.length; i++) {
                                     File f = files[i];
                                     if (f.isDirectory()) {
                                         LargeGift largeGift = new LargeGift();

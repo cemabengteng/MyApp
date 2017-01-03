@@ -33,7 +33,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".biggift.setjson.SetJsonActivity"/>
+        <activity
+            android:name=".biggift.setjson.SetJsonActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".biggift.show.ShowActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>

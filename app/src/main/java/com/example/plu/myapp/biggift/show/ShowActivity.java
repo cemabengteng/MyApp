@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.BaseActivity;
@@ -225,8 +226,13 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
 
     private void changeLwfPosition(BigGiftConfigBean giftConfig, LWF lwf) {
 
-        float lwfWidth = mLWF.getSize().x;
-        float lwfHeight = mLWF.getSize().y;
+        float lwfWidth = lwf.getSize().x;
+        float lwfHeight = lwf.getSize().y;
+        if (maxScale != 0) {
+            lwfWidth = mLWF.getSize().x * maxScale;
+            lwfHeight = mLWF.getSize().y * maxScale;
+        }
+
         float screenWidth = 0;
         float screenHeight = 0;
         if (mScreenOrientation != Configuration.ORIENTATION_UNDEFINED) {
@@ -291,7 +297,7 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
             }
         }
 
-        mLWF.moveTo("_root", moveX, -moveY);
+        lwf.moveTo("_root", moveX, -moveY);
 
     }
 
@@ -310,6 +316,8 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
 
     @Override
     protected void initView() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_show_lwf);
     }
 
