@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.BaseActivity;
@@ -43,6 +44,8 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
     public static final String BEAN = "BigGiftConfigBean";
     @Bind(R.id.lwfSurface)
     BaseStage surface;
+    @Bind(R.id.ll_main)
+    LinearLayout llMain;
 
     private BaseScene mScene;
     private LWFObject mLWFObject;
@@ -52,7 +55,14 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
 
     @Override
     protected void initData(Bundle state) {
-        final BigGiftConfigBean giftConfigBean = (BigGiftConfigBean) getIntent().getSerializableExtra(BEAN);
+        final BigGiftConfigBean mGiftConfigBean = (BigGiftConfigBean) getIntent().getSerializableExtra(BEAN);
+
+        //换背景图
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            llMain.setBackgroundResource(R.mipmap.heng);
+        } else {
+            llMain.setBackgroundResource(R.mipmap.shu);
+        }
 
         if (!LWF.loadLibrary()) {
             PluLog.e("ERROR: loadLibrary");
@@ -85,7 +95,7 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
                     @Override
                     public void run() {
                         clearLwf(); // 先清除上一次的动画
-                        addOneLwf(giftConfigBean);
+                        addOneLwf(mGiftConfigBean);
                     }
                 });
             }
@@ -304,13 +314,13 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // 获取屏幕宽高
-        final DisplayMetrics metrics = getResources().getDisplayMetrics();
-        mDisplaySize.x = metrics.widthPixels;
-        mDisplaySize.y = metrics.heightPixels;
-
+//        // 获取屏幕宽高
+//        final DisplayMetrics metrics = getResources().getDisplayMetrics();
+//        mDisplaySize.x = metrics.widthPixels;
+//        mDisplaySize.y = metrics.heightPixels;
+//
 //        if (mScreenOrientation == Configuration.ORIENTATION_UNDEFINED) {
-//            changeLwfPosition(configBean, mLWF);
+//            changeLwfPosition(mGiftConfigBean, mLWF);
 //        }
     }
 
