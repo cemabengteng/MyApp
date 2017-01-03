@@ -77,13 +77,19 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
         surface.setOnTouchListener(this);
 
         //开始一个动画
-        mScene.queueEvent(new Runnable() {
+        surface.postDelayed(new Runnable() {
             @Override
             public void run() {
-                clearLwf(); // 先清除上一次的动画
-                addOneLwf(giftConfigBean);
+                mScene.queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        clearLwf(); // 先清除上一次的动画
+                        addOneLwf(giftConfigBean);
+                    }
+                });
             }
-        });
+        }, 100);
+
     }
 
     private void addOneLwf(BigGiftConfigBean giftConfigBean) {
@@ -309,7 +315,11 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        PluLog.d("ontouch");
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (mLWF != null) {
+                mLWF.gotoAndPlay("_root", "start");
+            }
+        }
         return false;
     }
 

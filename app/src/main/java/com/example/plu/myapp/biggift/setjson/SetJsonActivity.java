@@ -2,6 +2,7 @@ package com.example.plu.myapp.biggift.setjson;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -124,6 +125,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
             case R.id.bt_start:
                 boolean isHaveAni = mPersenter.checkAniFile();
                 if (isHaveAni) {
+                    savaJsonData();
                     Intent intent = new Intent(SetJsonActivity.this, ShowActivity.class);
                     intent.putExtra(ShowActivity.BEAN, bigGiftConfigBean);
                     startActivity(intent);
@@ -132,6 +134,138 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
                 }
 
                 break;
+        }
+    }
+
+    private void savaJsonData() {
+        String textImgName = etTextImgName.getText().toString();
+        if (!TextUtils.isEmpty(textImgName) && !textImgName.equals(bigGiftConfigBean.getTextImgName())) {
+            bigGiftConfigBean.setTextImgName(textImgName);
+        }
+
+        String textFontSize = etTextFontSize.getText().toString();
+        if (!TextUtils.isEmpty(textFontSize) && !textImgName.equals(bigGiftConfigBean.getTextSize())) {
+            bigGiftConfigBean.setTextSize(textFontSize);
+        }
+
+        if (radioRandomTrue.isChecked()) {
+            bigGiftConfigBean.setRandom(true);
+        } else {
+            bigGiftConfigBean.setRandom(false);
+        }
+
+        try {
+            String orignFramWidth = etOrignFramWidth.getText().toString();
+            if (TextUtils.isEmpty(bigGiftConfigBean.getTextImgName())) return;
+            int intOrignFramWidth = Integer.valueOf(orignFramWidth);
+            if (intOrignFramWidth != 0 && intOrignFramWidth != (bigGiftConfigBean.getOrignFram().getWidth())) {
+                bigGiftConfigBean.getOrignFram().setWidth(intOrignFramWidth);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "OrignFramWidth数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            if (TextUtils.isEmpty(etOrignFramHeight.getText().toString())) return;
+            int orignFramHeight = Integer.valueOf(etOrignFramHeight.getText().toString());
+            if (orignFramHeight != 0 && orignFramHeight != (bigGiftConfigBean.getOrignFram().getHeight())) {
+                bigGiftConfigBean.getOrignFram().setHeight(orignFramHeight);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "OrignFramHeight数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            if (TextUtils.isEmpty(etDisplayFrameHeightMultiby.getText().toString())) return;
+            float displayFrameHeight = Float.valueOf(etDisplayFrameHeightMultiby.getText().toString());
+            if (displayFrameHeight != 0 && displayFrameHeight != (bigGiftConfigBean.getDisplayFrame().getHeight().getMultiby())) {
+                bigGiftConfigBean.getDisplayFrame().getHeight().setMultiby(displayFrameHeight);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "displayFrameHeight数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            if (TextUtils.isEmpty(etDisplayFrameHeightOffset.getText().toString())) return;
+            int displayFrameHeightOffset = Integer.valueOf(etDisplayFrameHeightOffset.getText().toString());
+            if (displayFrameHeightOffset != 0 && displayFrameHeightOffset != (bigGiftConfigBean.getDisplayFrame().getHeight().getOffset())) {
+                bigGiftConfigBean.getDisplayFrame().getHeight().setOffset(displayFrameHeightOffset);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "displayFrameHeightOffset数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            if (TextUtils.isEmpty(etDisplayFrameWidthMultiby.getText().toString())) return;
+            Float displayFrameWidthMultiby = Float.valueOf(etDisplayFrameWidthMultiby.getText().toString());
+            if (displayFrameWidthMultiby != 0 && displayFrameWidthMultiby != (bigGiftConfigBean.getDisplayFrame().getWidth().getMultiby())) {
+                bigGiftConfigBean.getDisplayFrame().getWidth().setMultiby(displayFrameWidthMultiby);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "displayFrameWidthMultiby数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            if (TextUtils.isEmpty(etDisplayFrameWidthOffset.getText().toString())) return;
+            Integer displayFrameWidthOffset = Integer.valueOf(etDisplayFrameWidthOffset.getText().toString());
+            if (displayFrameWidthOffset != 0 && displayFrameWidthOffset != (bigGiftConfigBean.getDisplayFrame().getWidth().getOffset())) {
+                bigGiftConfigBean.getDisplayFrame().getWidth().setOffset(displayFrameWidthOffset);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "displayFrameWidthOffset数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+
+        try {
+            if (TextUtils.isEmpty(etDdgesCenterXLandMultiby.getText().toString())) return;
+            Float ddgesCenterXLandMultiby = Float.valueOf(etDdgesCenterXLandMultiby.getText().toString());
+            if (ddgesCenterXLandMultiby != 0 && ddgesCenterXLandMultiby != (bigGiftConfigBean.getEdges().getCenterX().getLandMultiby())) {
+                bigGiftConfigBean.getEdges().getCenterX().setLandMultiby(ddgesCenterXLandMultiby);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "ddgesCenterXLandMultiby数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            if (TextUtils.isEmpty(etEdgesCenterXLandOffset.getText().toString())) return;
+            Integer edgesCenterXLandOffset = Integer.valueOf(etEdgesCenterXLandOffset.getText().toString());
+            if (edgesCenterXLandOffset != 0 && edgesCenterXLandOffset != (bigGiftConfigBean.getEdges().getCenterX().getLandOffset())) {
+                bigGiftConfigBean.getEdges().getCenterX().setLandOffset(edgesCenterXLandOffset);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "edgesCenterXLandOffset数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+
+        try {
+            if (TextUtils.isEmpty(etEdgesCenterXPortMultiby.getText().toString())) return;
+            Float edgesCenterXPortMultiby = Float.valueOf(etEdgesCenterXPortMultiby.getText().toString());
+            if (edgesCenterXPortMultiby != 0 && edgesCenterXPortMultiby != (bigGiftConfigBean.getEdges().getCenterX().getPortMultiby())) {
+                bigGiftConfigBean.getEdges().getCenterX().setPortMultiby(edgesCenterXPortMultiby);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "edgesCenterXPortMultiby数据有误", Toast.LENGTH_SHORT).show();
+        }
+
+
+        try {
+            if (TextUtils.isEmpty(etEdgesCenterXPortOffset.getText().toString())) return;
+            Integer edgesCenterXPortOffset = Integer.valueOf(etEdgesCenterXPortOffset.getText().toString());
+            if (edgesCenterXPortOffset != 0 && edgesCenterXPortOffset != (bigGiftConfigBean.getEdges().getCenterX().getPortOffset())) {
+                bigGiftConfigBean.getEdges().getCenterX().setPortOffset(edgesCenterXPortOffset);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "edgesCenterXPortOffset数据有误", Toast.LENGTH_SHORT).show();
         }
     }
 }
