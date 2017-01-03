@@ -10,11 +10,14 @@ import android.widget.Toast;
 
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
+import com.example.plu.myapp.biggift.Const;
 import com.example.plu.myapp.biggift.bean.BigGiftConfigBean;
 import com.example.plu.myapp.biggift.bean.LargeGift;
 import com.example.plu.myapp.biggift.show.ShowActivity;
 import com.example.plu.myapp.dagger.component.CommonActivityComponent;
+import com.example.plu.myapp.util.FileUtils;
 import com.example.plu.myapp.util.PluLog;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
@@ -119,7 +122,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         etEdgesCenterXPortOffset.setText(String.valueOf(bean.getEdges().getCenterX().getPortOffset()));
     }
 
-    @OnClick(R.id.bt_start)
+    @OnClick({R.id.bt_start, R.id.bt_save})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_start:
@@ -132,8 +135,29 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
                 } else {
                     Toast.makeText(mContext, "没找到ani文件", Toast.LENGTH_SHORT).show();
                 }
-
                 break;
+            case R.id.bt_save:
+                saveToLocal(bigGiftConfigBean);
+                break;
+        }
+    }
+
+    private void saveToLocal(BigGiftConfigBean bean) {
+        savaJsonData();
+        BigGiftConfigBean temp = null;
+        try {
+            temp = (BigGiftConfigBean) bean.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        if (temp != null) {
+            temp.setName(null);
+            temp.setPath(null);
+            Gson gson = new Gson();
+            String sjson = gson.toJson(temp);
+            PluLog.d(sjson);
+            FileUtils.contentToTxt(Const.JSONFILEPAHT, sjson);
+            Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
         }
     }
 

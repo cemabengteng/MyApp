@@ -1,6 +1,7 @@
 package com.example.plu.myapp.biggift.setjson;
 
 import com.example.plu.myapp.base.mvp.BasePresenter;
+import com.example.plu.myapp.biggift.Const;
 import com.example.plu.myapp.biggift.bean.BigGiftConfigBean;
 import com.example.plu.myapp.biggift.bean.LargeGift;
 import com.example.plu.myapp.dagger.provider.PresenterProvider;
@@ -45,6 +46,7 @@ public class SetJsonPersenter extends BasePresenter<SetJsonView> {
                                 if (f.getName().toLowerCase().endsWith(DEFAULT_CONFIG)) {
                                     String json = FileUtils.getFileJson(f.getPath());
                                     bean = new Gson().fromJson(json, BigGiftConfigBean.class);
+                                    Const.JSONFILEPAHT = f.getPath();
                                 }
                             }
                             for (File f : files) {

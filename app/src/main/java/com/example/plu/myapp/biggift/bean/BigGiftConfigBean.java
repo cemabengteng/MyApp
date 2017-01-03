@@ -9,7 +9,7 @@ import java.io.Serializable;
  * <p>
  * Created by plu on 2016/11/1.
  */
-public class BigGiftConfigBean implements Serializable {
+public class BigGiftConfigBean implements Serializable, Cloneable {
 
     private String path; // 路径
 
@@ -17,6 +17,10 @@ public class BigGiftConfigBean implements Serializable {
 
     private boolean isDefault; // 默认动画，在asset包下
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     /**
      * displayFrame : {"height":{"multiby":0.8,"offset":0},"width":{"multiby":0.8,"offset":0}}

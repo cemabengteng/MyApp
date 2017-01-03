@@ -7,14 +7,15 @@ import android.os.StatFs;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import org.json.JSONArray;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -212,51 +213,6 @@ public class FileUtils {
     }
 
     /**
-     * 读取本地json文件中的数据，判断本设备是否在白名单中
-     *
-     * @return -1,检测失败；0，不在白名单中；1，在白名单中
-     */
-    public static int checkWhiteList(Context context, String filePath) {
-        int canUseHard = -1;
-        InputStream inStream = null;
-        try {
-            inStream = context.getAssets().open(filePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    inStream));
-            StringBuilder builder = new StringBuilder();
-            String buf;
-            do {
-                buf = reader.readLine();
-                builder.append(buf != null ? buf : "");
-            } while (buf != null);
-
-            JSONArray jsyList = new JSONArray(builder.toString());
-            if (jsyList.length() > 0) {
-                String deviceModel = Build.MODEL.toLowerCase(); // 机型（手机型号）
-                canUseHard = 0;
-                for (int i = 0; i < jsyList.length(); i++) {
-                    boolean canUse = jsyList.getString(i).toLowerCase().contains(deviceModel);
-                    if (canUse) {
-                        canUseHard = 1;
-                        break;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            canUseHard = -1;
-        } finally {
-            if (inStream != null)
-                try {
-                    inStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
-        return canUseHard;
-    }
-
-    /**
      * 获取缓存路径
      *
      * @return
@@ -288,52 +244,6 @@ public class FileUtils {
         }
         return lfile;
     }
-
-    public static String getLoadPatchName(File fileDir, String fileType, String versionCode) throws Exception {
-        List<String> files = getFiles(fileDir, fileType);
-        int maxPatchVersion = 0;
-        for (String name : files) {
-            if (name.startsWith(versionCode + "_")) {
-                int patchVersion = Integer.valueOf(name.substring(name.indexOf("_") + 1, name.indexOf(".")));
-                maxPatchVersion = Math.max(maxPatchVersion, patchVersion);
-            }
-        }
-        return String.valueOf(maxPatchVersion);
-    }
-
-    public static String readAssetsString(Context context, String fileName) {
-        InputStream inputStream = null;
-        BufferedReader bufferedReader = null;
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            String line = null;
-            bufferedReader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return stringBuilder.toString();
-    }
-
 
     /**
      * 注意此ResponseBody为okHttp3版本下的
@@ -495,7 +405,6 @@ public class FileUtils {
             }
         }
     }
-
 
 
     /**
@@ -703,6 +612,53 @@ public class FileUtils {
             e.printStackTrace();
         }
         return stringBuilder.toString();
+    }
+
+
+    /**
+     * 把string写入文件中
+     *
+     * @param filePath
+     * @param content
+     */
+    public static void contentToTxt(String filePath, String content) {
+        BufferedReader input = null;
+        BufferedWriter output = null;
+        try {
+            File f = new File(filePath);
+            if (f.exists()) {
+                System.out.print("文件存在");
+            } else {
+                System.out.print("文件不存在");
+                f.createNewFile();// 不存在则创建
+            }
+            input = new BufferedReader(new FileReader(f));
+
+            output = new BufferedWriter(new FileWriter(f));
+            output.write(content);
+            PluLog.d(content);
+            PluLog.d(filePath);
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (input != null) {
+                    input.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (output != null) {
+                    output.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }
