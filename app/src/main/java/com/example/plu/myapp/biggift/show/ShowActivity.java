@@ -277,8 +277,8 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
             //随机位置动画
             moveX = (float) (screenWidth - screenWidth * lPadding - screenWidth * rPadding - lwfWidth);
             moveY = (float) (screenHeight - screenHeight * tPadding - screenHeight * bPadding - lwfHeight);
-            moveX = new Random().nextInt(moveX < 0 ? 0 : (int) moveX);
-            moveY = new Random().nextInt(moveY < 0 ? 0 : (int) moveY);
+            moveX = new Random().nextInt(moveX < 0 ? 1 : (int) moveX);
+            moveY = new Random().nextInt(moveY < 0 ? 1 : (int) moveY);
             moveX += screenWidth * lPadding; // padding值
             moveY += lwfHeight + screenHeight * tPadding;
         } else {                              //固定位置动画

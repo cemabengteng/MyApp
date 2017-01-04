@@ -19,6 +19,8 @@ import com.example.plu.myapp.util.FileUtils;
 import com.example.plu.myapp.util.PluLog;
 import com.google.gson.Gson;
 
+import java.math.BigDecimal;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -161,6 +163,7 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
     }
 
+
     private void savaJsonData() {
         String textImgName = etTextImgName.getText().toString();
         if (!TextUtils.isEmpty(textImgName) && !textImgName.equals(bigGiftConfigBean.getTextImgName())) {
@@ -180,10 +183,11 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
 
         try {
             String orignFramWidth = etOrignFramWidth.getText().toString();
-            if (TextUtils.isEmpty(bigGiftConfigBean.getTextImgName())) return;
-            int intOrignFramWidth = Integer.valueOf(orignFramWidth);
-            if (intOrignFramWidth != 0 && intOrignFramWidth != (bigGiftConfigBean.getOrignFram().getWidth())) {
-                bigGiftConfigBean.getOrignFram().setWidth(intOrignFramWidth);
+            if (!TextUtils.isEmpty(bigGiftConfigBean.getTextImgName())) {
+                int intOrignFramWidth = Integer.valueOf(orignFramWidth);
+                if (intOrignFramWidth != (bigGiftConfigBean.getOrignFram().getWidth())) {
+                    bigGiftConfigBean.getOrignFram().setWidth(intOrignFramWidth);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -191,10 +195,11 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
 
         try {
-            if (TextUtils.isEmpty(etOrignFramHeight.getText().toString())) return;
-            int orignFramHeight = Integer.valueOf(etOrignFramHeight.getText().toString());
-            if (orignFramHeight != 0 && orignFramHeight != (bigGiftConfigBean.getOrignFram().getHeight())) {
-                bigGiftConfigBean.getOrignFram().setHeight(orignFramHeight);
+            if (!TextUtils.isEmpty(etOrignFramHeight.getText().toString())) {
+                int orignFramHeight = Integer.valueOf(etOrignFramHeight.getText().toString());
+                if (orignFramHeight != (bigGiftConfigBean.getOrignFram().getHeight())) {
+                    bigGiftConfigBean.getOrignFram().setHeight(orignFramHeight);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -202,10 +207,13 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
 
         try {
-            if (TextUtils.isEmpty(etDisplayFrameHeightMultiby.getText().toString())) return;
-            float displayFrameHeight = Float.valueOf(etDisplayFrameHeightMultiby.getText().toString());
-            if (displayFrameHeight != 0 && displayFrameHeight != (bigGiftConfigBean.getDisplayFrame().getHeight().getMultiby())) {
-                bigGiftConfigBean.getDisplayFrame().getHeight().setMultiby(displayFrameHeight);
+            if (!TextUtils.isEmpty(etDisplayFrameHeightMultiby.getText().toString())) {
+                double displayFrameHeight = Double.valueOf(etDisplayFrameHeightMultiby.getText().toString());
+                double doubleValue = new BigDecimal(displayFrameHeight).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                displayFrameHeight = doubleValue;
+                if (displayFrameHeight != (bigGiftConfigBean.getDisplayFrame().getHeight().getMultiby())) {
+                    bigGiftConfigBean.getDisplayFrame().getHeight().setMultiby(displayFrameHeight);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -213,10 +221,11 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
 
         try {
-            if (TextUtils.isEmpty(etDisplayFrameHeightOffset.getText().toString())) return;
-            int displayFrameHeightOffset = Integer.valueOf(etDisplayFrameHeightOffset.getText().toString());
-            if (displayFrameHeightOffset != 0 && displayFrameHeightOffset != (bigGiftConfigBean.getDisplayFrame().getHeight().getOffset())) {
-                bigGiftConfigBean.getDisplayFrame().getHeight().setOffset(displayFrameHeightOffset);
+            if (!TextUtils.isEmpty(etDisplayFrameHeightOffset.getText().toString())) {
+                int displayFrameHeightOffset = Integer.valueOf(etDisplayFrameHeightOffset.getText().toString());
+                if (displayFrameHeightOffset != (bigGiftConfigBean.getDisplayFrame().getHeight().getOffset())) {
+                    bigGiftConfigBean.getDisplayFrame().getHeight().setOffset(displayFrameHeightOffset);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -224,10 +233,13 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
 
         try {
-            if (TextUtils.isEmpty(etDisplayFrameWidthMultiby.getText().toString())) return;
-            Float displayFrameWidthMultiby = Float.valueOf(etDisplayFrameWidthMultiby.getText().toString());
-            if (displayFrameWidthMultiby != 0 && displayFrameWidthMultiby != (bigGiftConfigBean.getDisplayFrame().getWidth().getMultiby())) {
-                bigGiftConfigBean.getDisplayFrame().getWidth().setMultiby(displayFrameWidthMultiby);
+            if (!TextUtils.isEmpty(etDisplayFrameWidthMultiby.getText().toString())) {
+                double displayFrameWidthMultiby = Double.valueOf(etDisplayFrameWidthMultiby.getText().toString());
+                double doubleValue = new BigDecimal(displayFrameWidthMultiby).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                displayFrameWidthMultiby = doubleValue;
+                if (displayFrameWidthMultiby != (bigGiftConfigBean.getDisplayFrame().getWidth().getMultiby())) {
+                    bigGiftConfigBean.getDisplayFrame().getWidth().setMultiby(displayFrameWidthMultiby);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -235,10 +247,11 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
 
         try {
-            if (TextUtils.isEmpty(etDisplayFrameWidthOffset.getText().toString())) return;
-            Integer displayFrameWidthOffset = Integer.valueOf(etDisplayFrameWidthOffset.getText().toString());
-            if (displayFrameWidthOffset != 0 && displayFrameWidthOffset != (bigGiftConfigBean.getDisplayFrame().getWidth().getOffset())) {
-                bigGiftConfigBean.getDisplayFrame().getWidth().setOffset(displayFrameWidthOffset);
+            if (!TextUtils.isEmpty(etDisplayFrameWidthOffset.getText().toString())) {
+                Integer displayFrameWidthOffset = Integer.valueOf(etDisplayFrameWidthOffset.getText().toString());
+                if (displayFrameWidthOffset != (bigGiftConfigBean.getDisplayFrame().getWidth().getOffset())) {
+                    bigGiftConfigBean.getDisplayFrame().getWidth().setOffset(displayFrameWidthOffset);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -247,10 +260,13 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
 
 
         try {
-            if (TextUtils.isEmpty(etDdgesCenterXLandMultiby.getText().toString())) return;
-            Float ddgesCenterXLandMultiby = Float.valueOf(etDdgesCenterXLandMultiby.getText().toString());
-            if (ddgesCenterXLandMultiby != 0 && ddgesCenterXLandMultiby != (bigGiftConfigBean.getEdges().getCenterX().getLandMultiby())) {
-                bigGiftConfigBean.getEdges().getCenterX().setLandMultiby(ddgesCenterXLandMultiby);
+            if (!TextUtils.isEmpty(etDdgesCenterXLandMultiby.getText().toString())) {
+                double ddgesCenterXLandMultiby = Double.valueOf(etDdgesCenterXLandMultiby.getText().toString());
+                double doubleValue = new BigDecimal(ddgesCenterXLandMultiby).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                ddgesCenterXLandMultiby = doubleValue;
+                if (ddgesCenterXLandMultiby != (bigGiftConfigBean.getEdges().getCenterX().getLandMultiby())) {
+                    bigGiftConfigBean.getEdges().getCenterX().setLandMultiby(ddgesCenterXLandMultiby);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -258,10 +274,11 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
         }
 
         try {
-            if (TextUtils.isEmpty(etEdgesCenterXLandOffset.getText().toString())) return;
-            Integer edgesCenterXLandOffset = Integer.valueOf(etEdgesCenterXLandOffset.getText().toString());
-            if (edgesCenterXLandOffset != 0 && edgesCenterXLandOffset != (bigGiftConfigBean.getEdges().getCenterX().getLandOffset())) {
-                bigGiftConfigBean.getEdges().getCenterX().setLandOffset(edgesCenterXLandOffset);
+            if (!TextUtils.isEmpty(etEdgesCenterXLandOffset.getText().toString())) {
+                Integer edgesCenterXLandOffset = Integer.valueOf(etEdgesCenterXLandOffset.getText().toString());
+                if (edgesCenterXLandOffset != (bigGiftConfigBean.getEdges().getCenterX().getLandOffset())) {
+                    bigGiftConfigBean.getEdges().getCenterX().setLandOffset(edgesCenterXLandOffset);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -270,10 +287,13 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
 
 
         try {
-            if (TextUtils.isEmpty(etEdgesCenterXPortMultiby.getText().toString())) return;
-            Float edgesCenterXPortMultiby = Float.valueOf(etEdgesCenterXPortMultiby.getText().toString());
-            if (edgesCenterXPortMultiby != 0 && edgesCenterXPortMultiby != (bigGiftConfigBean.getEdges().getCenterX().getPortMultiby())) {
-                bigGiftConfigBean.getEdges().getCenterX().setPortMultiby(edgesCenterXPortMultiby);
+            if (!TextUtils.isEmpty(etEdgesCenterXPortMultiby.getText().toString())) {
+                double edgesCenterXPortMultiby = Double.valueOf(etEdgesCenterXPortMultiby.getText().toString());
+                double doubleValue = new BigDecimal(edgesCenterXPortMultiby).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                edgesCenterXPortMultiby = doubleValue;
+                if (edgesCenterXPortMultiby != (bigGiftConfigBean.getEdges().getCenterX().getPortMultiby())) {
+                    bigGiftConfigBean.getEdges().getCenterX().setPortMultiby(edgesCenterXPortMultiby);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -282,10 +302,11 @@ public class SetJsonActivity extends MvpActivity<CommonActivityComponent, SetJso
 
 
         try {
-            if (TextUtils.isEmpty(etEdgesCenterXPortOffset.getText().toString())) return;
-            Integer edgesCenterXPortOffset = Integer.valueOf(etEdgesCenterXPortOffset.getText().toString());
-            if (edgesCenterXPortOffset != 0 && edgesCenterXPortOffset != (bigGiftConfigBean.getEdges().getCenterX().getPortOffset())) {
-                bigGiftConfigBean.getEdges().getCenterX().setPortOffset(edgesCenterXPortOffset);
+            if (!TextUtils.isEmpty(etEdgesCenterXPortOffset.getText().toString())) {
+                Integer edgesCenterXPortOffset = Integer.valueOf(etEdgesCenterXPortOffset.getText().toString());
+                if (edgesCenterXPortOffset != (bigGiftConfigBean.getEdges().getCenterX().getPortOffset())) {
+                    bigGiftConfigBean.getEdges().getCenterX().setPortOffset(edgesCenterXPortOffset);
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
