@@ -10,10 +10,9 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
-//        ndk {
-//            moduleName "lwf-pure2d"
-//            abiFilters "armeabi", "armeabi-v7a", "x86"
-//        }
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
     buildTypes {
         release {
