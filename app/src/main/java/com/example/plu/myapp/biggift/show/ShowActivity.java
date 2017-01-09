@@ -219,8 +219,23 @@ public class ShowActivity extends BaseActivity implements View.OnTouchListener, 
             public void call() {
                 // 这个回调本身在GL线程中
                 PluLog.d("complete");
+                onLwfComplete();
             }
         });
+    }
+
+    /**
+     * lwf结束
+     */
+    private void onLwfComplete() {
+        if (mScene != null) {
+            mScene.queueEvent(new Runnable() {
+                @Override
+                public void run() {
+                    clearLwf(); // 先清除上一次的动画
+                }
+            });
+        }
     }
 
 
