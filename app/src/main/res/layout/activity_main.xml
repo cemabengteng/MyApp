@@ -7,6 +7,13 @@
     android:gravity="center_horizontal|bottom|right"
     android:orientation="vertical">
 
+    <Button
+        android:layout_gravity="left"
+        android:id="@+id/bt_1"
+        android:text="完整动画"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
     <com.example.plu.myapp.main.ComBoView
         android:id="@+id/cobo_view"
