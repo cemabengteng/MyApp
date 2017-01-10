@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/comboOutside"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:clickable="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right">
+
+        <com.example.view.cobo.CircleProgressBar
+            android:id="@+id/id_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/group_btn_padding"
+            android:layout_marginRight="@dimen/group_btn_padding"
+            android:visibility="gone"
+            app:bgColor="@color/white"
+            app:circleRadius="@dimen/group_btn_width"
+            app:comboProgress="100"
+            app:ringBgColor="@color/combo_progress_bg"
+            app:ringColor="@color/group_progress"
+            app:ringWidth="1.6dp"/>
+
+        <com.example.view.cobo.CircleProgressBar
+            android:id="@+id/id_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/group_btn_padding"
+            android:layout_marginRight="@dimen/group_btn_padding"
+            android:visibility="gone"
+            app:bgColor="@color/white"
+            app:circleRadius="@dimen/group_btn_width"
+            app:comboProgress="100"
+            app:ringBgColor="@color/combo_progress_bg"
+            app:ringColor="@color/group_progress"
+            app:ringWidth="1.6dp"/>
+
+        <com.example.view.cobo.CircleProgressBar
+            android:id="@+id/id_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/group_btn_padding"
+            android:layout_marginRight="@dimen/group_btn_padding"
+            android:visibility="gone"
+            app:bgColor="@color/white"
+            app:circleRadius="@dimen/group_btn_width"
+            app:comboProgress="100"
+            app:ringBgColor="@color/combo_progress_bg"
+            app:ringColor="@color/group_progress"
+            app:ringWidth="1.6dp"/>
+
+        <com.example.view.cobo.CircleProgressBar
+            android:id="@+id/id_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/group_btn_padding"
+            android:layout_marginRight="@dimen/group_btn_padding"
+            android:visibility="gone"
+            app:bgColor="@color/white"
+            app:circleRadius="@dimen/group_btn_width"
+            app:comboProgress="100"
+            app:ringBgColor="@color/combo_progress_bg"
+            app:ringColor="@color/group_progress"
+            app:ringWidth="1.6dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainBar"
+        android:layout_width="@dimen/combo_btn_parent_width"
+        android:layout_height="@dimen/combo_btn_parent_width"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/combo_btn_padding">
+
+        <com.example.view.cobo.CircleProgressBar
+            android:id="@+id/comboBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:bgColor="@color/white"
+            app:circleRadius="@dimen/combo_btn_width"
+            app:comboProgress="0"
+            app:ringBgColor="@color/combo_progress_bg"
+            app:ringColor="@color/combo_progress"
+            app:ringWidth="3dp"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/comboBarImg"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:actualImageScaleType="fitCenter"
+            app:placeholderImage="@drawable/img_gift_normal"
+            app:placeholderImageScaleType="fitCenter"/>
+    </RelativeLayout>
+</RelativeLayout>

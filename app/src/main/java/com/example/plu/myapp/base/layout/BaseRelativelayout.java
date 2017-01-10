@@ -92,14 +92,12 @@ public abstract class BaseRelativelayout extends RxRelativeLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (isRootView) {
-            ButterKnife.bind(this);
-        } else {
-            ButterKnife.bind(this, rootView);
-        }
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+
+
+        if (!isUseEventBus()) return;
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
     }
 
     @Override
@@ -122,5 +120,9 @@ public abstract class BaseRelativelayout extends RxRelativeLayout {
      */
     public void setSelfRelease(boolean selfRelease) {
         this.selfRelease = selfRelease;
+    }
+
+    protected boolean isUseEventBus() {
+        return true;
     }
 }

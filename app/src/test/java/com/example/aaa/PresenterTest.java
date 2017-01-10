@@ -12,7 +12,9 @@ import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 
@@ -144,6 +146,17 @@ public class PresenterTest {
         } else {
             return String.valueOf(f1);
         }
+    }
+
+
+    @Test
+    public void testList() {
+        List<String> strings = new ArrayList<>();
+        strings.add("aaa");
+        strings.add("bbb");
+        strings.add("ccc");
+        String[] pathHaveSort = new String[strings.size() + 1];
+        System.out.print(pathHaveSort.length + "  " + pathHaveSort[strings.size()]);
     }
 
 

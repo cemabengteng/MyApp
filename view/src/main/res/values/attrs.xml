@@ -35,5 +35,15 @@
         <attr name="StripPagerIndicator_hide_indicator" format="boolean" />
     </declare-styleable>
 
+    <!-- 连击window -->
+    <declare-styleable name="CircleProgressbar">
+        <attr name="bgColor" format="color" />
+        <attr name="circleRadius" format="dimension" />
+        <attr name="ringWidth" format="dimension" />
+        <attr name="ringColor" format="color" />
+        <attr name="ringBgColor" format="color" />
+        <attr name="comboProgress" format="integer" />
+    </declare-styleable>
+
 
 </resources>

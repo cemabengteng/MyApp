@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/charge_gift_fullPanel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/test">
-
-    <com.wonderkiln.blurkit.BlurLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.example.view.StripPagerTabLayout.GiftStripPagerTabLayout
-                android:id="@+id/tab"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:saveEnabled="false"
-                app:StripPagerIndicator_hide_indicator="true"/>
+    android:gravity="center_horizontal|bottom|right"
+    android:orientation="vertical">
 
 
-            <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_below="@+id/tab"
-                app:rvp_singlePageFling="true"
-                app:rvp_triggerOffset="0.1"/>
-
-        </RelativeLayout>
-
-    </com.wonderkiln.blurkit.BlurLayout>
-
-    <com.wonderkiln.blurkit.BlurLayout
-        android:id="@+id/blurLayout"
+    <com.example.plu.myapp.main.ComBoView
+        android:id="@+id/cobo_view"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_marginRight="10dp"
+        android:background="#66666666"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_charge_gift_bg"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shap_charge_gift_view_bg"
+        android:gravity="center">
 
         <TextView
+            android:id="@+id/tv_charge_gift_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="燃烧吧"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_charge_gift_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="BlurKit!"
-            android:textColor="@android:color/white"/>
+            android:layout_below="@+id/tv_charge_gift_name"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="2dp"
+            android:drawableRight="@drawable/ic_user_longbi_small"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:text="100"
+            android:textColor="@color/orange"
+            android:textSize="10sp"/>
 
-    </com.wonderkiln.blurkit.BlurLayout>
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

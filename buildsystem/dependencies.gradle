@@ -22,6 +22,8 @@ ext{
     eventbusVersion = '3.0.0'
     blurkitVersion = '1.0.0'
     RecyclerViewPagerVersion = 'v1.1.1'
+    fresco = '0.11.0'
+    frescoDrawee = '0.5.+';
 
     junitVersion = '4.12'
     mockitoVersion = '2.1.0'
@@ -42,6 +44,8 @@ ext{
             eventbus                  : "org.greenrobot:eventbus:${eventbusVersion}",
             blurkit                   : "com.wonderkiln:blurkit:${blurkitVersion}",
             RecyclerViewPager         : "com.github.lsjwzh.RecyclerViewPager:lib:${RecyclerViewPagerVersion}",
+            fresco                    : "com.facebook.fresco:fresco:${fresco}",
+            frescoDrawee              : "com.facebook.fresco:drawee:${frescoDrawee}"
     ]
 
     developmentTestDependencies = [

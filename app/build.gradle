@@ -16,6 +16,10 @@ android {
 
         renderscriptTargetApi 24
         renderscriptSupportModeEnabled true
+
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
     buildTypes {
         release {
@@ -57,6 +61,8 @@ dependencies {
     compile developmentDependencies.eventbus
     compile developmentDependencies.RecyclerViewPager
     compile developmentDependencies.blurkit
+    compile developmentDependencies.fresco
+    compile developmentDependencies.frescoDrawee
     compile project(':domain')
     compile project(':data')
     compile project(':view')

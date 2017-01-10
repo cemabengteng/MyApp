@@ -14,4 +14,22 @@
     <color name="rank_first_background">#ff7e00</color>
     <color name="rank_second_background">#ffa400</color>
     <color name="rank_third_background">#ffd700</color>
+
+    <!-- GIFT LIST COLOR STYLE -->
+    <color name="gift_list_bg_dark">#cc000000</color>
+    <color name="gift_bottom_bg_dark">#ff000000</color>
+    <color name="gift_list_bg_light">#FFFFFF</color>
+    <color name="gift_bottom_bg_light">#FFFFFF</color>
+    <color name="gift_send_bt_bg_dark">#696766</color>
+    <color name="gift_send_bt_bg_white">#e8e9ed</color>
+    <color name="gift_tab_bg_light">#ecebf0</color>
+    <color name="gift_tab_bg_dark">#ff000000</color>
+    <color name="gift_tab_text_unchecked_light">#000000</color>
+    <color name="gift_tab_text_unchecked_dark">#a3a9b1</color>
+    <color name="gift_tab_text_checked_light">@color/orange</color>
+    <color name="gift_tab_text_checked_dark">@color/white</color>
+
+    <color name="combo_progress">#FF5425</color>
+    <color name="group_progress">#ff7e00</color>
+    <color name="combo_progress_bg">#FFD93E</color>
 </resources>
