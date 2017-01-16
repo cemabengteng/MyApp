@@ -2,6 +2,7 @@ package com.example.plu.myapp.main;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
@@ -53,7 +54,15 @@ public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
         gifts.setOptionses(optionsList);
 
         coboView.setData(gifts);
+
+        coboView.setOnComboListener(new ComBoView.OnComboListener() {
+            @Override
+            public void sendGift(int num, boolean isCombo) {
+                Toast.makeText(mContext, num + "", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     @OnClick(R.id.bt_1)
     public void onClick(View v) {

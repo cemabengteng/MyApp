@@ -13,7 +13,6 @@ import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.layout.BaseRelativelayout;
 import com.example.plu.myapp.util.FrescoUtil;
 import com.example.plu.myapp.util.NullUtil;
-import com.example.plu.myapp.util.PluLog;
 import com.example.view.cobo.CircleProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -39,11 +38,11 @@ public class ComBoView extends BaseRelativelayout {
     private static final int DEFAULT_COMBO_DURING = 3000; // 默认倒计时长(ms)
     private static final int DEFAULT_COMBO_DELAY = 600; // 默认倒计误差时长(ms)
 
-    private static final int TYPE_OF_SHOW = -1; // 展示模式，用在快捷礼物下，第一点击时，展示连击动画，再次点击则赠送
-    private static final int TYPE_OF_SEND = -2; // 赠送模式，用在礼物列表下，每次点击都赠送，显示时展示动画
+    private static final int TYPE_OF_IN_CHARGIFT = -1; // 用在快捷礼物下，第一点击时，展示连击动画，再次点击则赠送
+    private static final int TYPE_OF_IN_GIFTLIST = -2; // 用在礼物列表下，每次点击都赠送，显示时展示动画
 
-    private View mComboOutside;
     private View mMainBar;
+    private View mComboOutside;
     private CircleProgressBar mComboBar;
     private SimpleDraweeView mComboBarImg;
     private CircleProgressBar[] mGroupGifts;
@@ -56,6 +55,7 @@ public class ComBoView extends BaseRelativelayout {
     private int mFirstDuring = DEFAULT_COMBO_DURING; // 初次进入时使用固定的关闭倒计时
     private boolean mParentIsDismiss;   //当连击动画结束时，父布局是否需要隐藏
     private int currentType; //当前的模式
+    private boolean isAnimatorRunning = false;  //动画是否还在播放
 
     private AnimatorSet showAnimatorSet;
     private AnimatorSet dismissAnimatorSet;
@@ -114,33 +114,18 @@ public class ComBoView extends BaseRelativelayout {
         mComboBarImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PluLog.d("mComboBarImg onclick");
-                if (currentType == TYPE_OF_SEND) {
-                    // 正在倒计时，点击后重置进度，并发送礼物
-                    if (comboOb != null && !comboOb.isUnsubscribed()) {
-                        progress = 0;
-                        // 发送连击礼物，getCombo判断是否是连击礼物
-                        if (listener != null && mGifts != null) {
-                            listener.sendGift(1, mGifts.getComboInteval() > 0);
-                        }
-                        // 重置连击间隔时间
-                        if (mGifts != null && mGifts.getComboInteval() > 0 &&
-                                mFirstDuring > 0 && mFirstDuring != mComboDuring) {
-                            mFirstDuring = 0;
-                            progress = 0;
-                            if (mComboBar != null) {
-                                mComboBar.setProgress(progress);
-                            }
-                            // 只重置progress，不再开启线程
-                            comboOb.unsubscribe();
-                            comboOb = null;
-                            startCombo();
-                        }
-                    }
-                } else if (currentType == TYPE_OF_SHOW) {
+                if (currentType == TYPE_OF_IN_GIFTLIST) {
+                    sendGift();
+                } else if (currentType == TYPE_OF_IN_CHARGIFT) {
                     //只显示id1,id2,id3,id4弹出动画
-                    initGroupGifts();
-                    startShowAnim();
+                    if (isAnimatorRunning) {
+                        sendGift();
+                    } else {
+                        progress = 0;
+                        initGroupGifts();
+                        startShowNumAnim();
+                        isAnimatorRunning = true;
+                    }
                 }
             }
         });
@@ -172,11 +157,56 @@ public class ComBoView extends BaseRelativelayout {
                 onClickNum(v);
             }
         });
-    }
 
+        mComboOutside.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentType == TYPE_OF_IN_GIFTLIST) {
+                    superDismiss();
+                } else {
+                    if (comboOb != null && !comboOb.isUnsubscribed()) {
+                        comboOb.unsubscribe();
+                    }
+                    isAnimatorRunning = false;
+                    numViewDismiss();
+                    mComboBar.setProgress(0);
+                }
+            }
+        });
+    }
 
     public void setOnComboListener(ComBoView.OnComboListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * 发送礼物
+     * 1. 回调发送礼物
+     * 2. 更新进度条
+     * 3. 重置连击间隔时间
+     */
+    private void sendGift() {
+        // 正在倒计时，点击后重置进度，并发送礼物
+        if (comboOb != null && !comboOb.isUnsubscribed()) {
+            progress = 0;
+            // 发送连击礼物，getCombo判断是否是连击礼物
+            if (listener != null && mGifts != null) {
+                listener.sendGift(1, mGifts.getComboInteval() > 0);
+            }
+            // 重置连击间隔时间
+            if (mGifts != null && mGifts.getComboInteval() > 0 &&
+                    mFirstDuring > 0 && mFirstDuring != mComboDuring) {
+                mFirstDuring = 0;
+                progress = 0;
+                if (mComboBar != null) {
+                    mComboBar.setProgress(progress);
+                }
+                // 只重置progress，不再开启线程
+                comboOb.unsubscribe();
+                comboOb = null;
+                startCombo();
+            }
+        }
     }
 
     /**
@@ -210,6 +240,9 @@ public class ComBoView extends BaseRelativelayout {
         if (mComboBar == null) return;
         if (gifts == null) return;
 
+        //设置为赠送模式
+        currentType = TYPE_OF_IN_GIFTLIST;
+
         // 进度条初始化
         progress = 0;
         // 初始化初次倒计时长
@@ -242,7 +275,15 @@ public class ComBoView extends BaseRelativelayout {
      */
     public void setData(Gifts gifts) {
         this.mGifts = gifts;
-        currentType = ComBoView.TYPE_OF_SHOW;
+        currentType = ComBoView.TYPE_OF_IN_CHARGIFT;
+
+        // 进度条初始化
+        progress = 0;
+        // 初始化初次倒计时长
+        mFirstDuring = DEFAULT_COMBO_DURING - DEFAULT_COMBO_DELAY;
+        mComboBar.setProgress(progress);
+
+        setComboDuring(mGifts.getComboInteval() * 1000);
         initGiftImg();
     }
 
@@ -271,7 +312,7 @@ public class ComBoView extends BaseRelativelayout {
             length = mContext.getResources().getDimensionPixelOffset(R.dimen.combo_btn_width) * 2 +
                     (int) (mContext.getResources().getDimensionPixelOffset(R.dimen.combo_btn_padding) * 0.1);
         }
-        
+
         List<Options> optionsList = new ArrayList();
 
         int size = 0;
@@ -376,6 +417,52 @@ public class ComBoView extends BaseRelativelayout {
     }
 
     /**
+     * 仅仅展示连击数字的动画
+     */
+    private void startShowNumAnim() {
+        if (showAnimatorSet != null && showAnimatorSet.isRunning()) {
+            return;
+        }
+        if (NullUtil.isNull(mMainBar, mGroupGifts)) {
+            startCombo();
+        }
+
+        // 动画总时长
+        showAnimatorSet = new AnimatorSet();//组合动画
+        for (int i = 0, length = mGroupGifts.length; i < length; i++) {
+            mGroupGifts[i].setAlpha(1);
+            mGroupGifts[i].setScaleX(0f);
+            mGroupGifts[i].setScaleY(0f);
+            mGroupGifts[i].setPivotX(mGroupGifts[i].getWidth() / 2);
+            mGroupGifts[i].setPivotY(mGroupGifts[i].getHeight() / 2);
+            // 组合动画C，时长delay：220ms + 40ms * 3，during：160ms
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(mGroupGifts[i], "scaleX", 0.2f, 1.1f, 1.0f).setDuration(160);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(mGroupGifts[i], "scaleY", 0.2f, 1.1f, 1.0f).setDuration(160);
+            showAnimatorSet.play(scaleX).with(scaleY).after(250 + 40 * i);
+        }
+        showAnimatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startCombo();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        showAnimatorSet.start();
+    }
+
+    /**
      * 开始倒计时/发送连击
      */
     private void startCombo() {
@@ -405,12 +492,24 @@ public class ComBoView extends BaseRelativelayout {
                 .subscribe(new Subscriber<Long>() {
                     @Override
                     public void onCompleted() {
-                        setVisibility(GONE);
+                        if (currentType == TYPE_OF_IN_GIFTLIST) {
+                            setVisibility(GONE);
+                        } else {
+                            numViewDismiss();
+                            mComboBar.setProgress(0);
+                            isAnimatorRunning = false;
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        setVisibility(GONE);
+                        if (currentType == TYPE_OF_IN_GIFTLIST) {
+                            setVisibility(GONE);
+                        } else {
+                            numViewDismiss();
+                            mComboBar.setProgress(0);
+                            isAnimatorRunning = false;
+                        }
                     }
 
                     @Override
@@ -418,7 +517,16 @@ public class ComBoView extends BaseRelativelayout {
                         // 完成100%，加一点点缓冲（5）后关闭
                         if (progress > 105) {
                             // 关闭线程
-                            setVisibility(GONE);
+                            if (currentType == TYPE_OF_IN_GIFTLIST) {
+                                setVisibility(GONE);
+                            } else {
+                                if (comboOb != null && !comboOb.isUnsubscribed()) {
+                                    comboOb.unsubscribe();
+                                }
+                                numViewDismiss();
+                                mComboBar.setProgress(0);
+                                isAnimatorRunning = false;
+                            }
                             return;
                         }
                     }
@@ -489,6 +597,17 @@ public class ComBoView extends BaseRelativelayout {
             bar.setVisibility(View.GONE);
         }
         setVisibility(GONE);
+    }
+
+    /**
+     * 仅仅消失数字组合view
+     */
+    private void numViewDismiss() {
+        if (mGroupGifts == null) return;
+        // 隐藏按钮
+        for (CircleProgressBar bar : mGroupGifts) {
+            bar.setVisibility(View.GONE);
+        }
     }
 
     /**
