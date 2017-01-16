@@ -271,6 +271,386 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_centerY_landMultiby："/>
+
+            <EditText
+                android:id="@+id/et_edges_centerY_landMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_centerY_landOffset："/>
+
+            <EditText
+                android:id="@+id/et_edges_centerY_landOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_centerY_portMultiby："/>
+
+            <EditText
+                android:id="@+id/et_edges_centerY_portMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_centerY_portOffset："/>
+
+            <EditText
+                android:id="@+id/et_edges_centerY_portOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_bottom_landMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_bottom_landMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_bottom_landOffset："/>
+
+            <EditText
+                android:id="@+id/edges_bottom_landOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_bottom_portMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_bottom_portMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_bottom_portOffset："/>
+
+            <EditText
+                android:id="@+id/edges_bottom_portOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_right_landMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_right_landMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_right_landOffset："/>
+
+            <EditText
+                android:id="@+id/edges_right_landOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_right_portMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_right_portMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_right_portOffset："/>
+
+            <EditText
+                android:id="@+id/edges_right_portOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_left_landMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_left_landMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_left_landOffset："/>
+
+            <EditText
+                android:id="@+id/edges_left_landOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_left_portMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_left_portMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_left_portOffset："/>
+
+            <EditText
+                android:id="@+id/edges_left_portOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_top_landMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_top_landMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_top_landOffset："/>
+
+            <EditText
+                android:id="@+id/edges_top_landOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_top_portMultiby："/>
+
+            <EditText
+                android:id="@+id/edges_top_portMultiby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edges_top_portOffset："/>
+
+            <EditText
+                android:id="@+id/edges_top_portOffset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numeric="signed|decimal"/>
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
