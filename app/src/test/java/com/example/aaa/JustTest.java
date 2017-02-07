@@ -71,4 +71,11 @@ public class JustTest {
     }
 
 
+    @Test
+    public void testRxjava(){
+        double i = (float)23 / 3;
+        System.out.print(i);
+    }
+
+
 }

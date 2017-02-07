@@ -55,6 +55,7 @@ public class PresenterTest {
         System.out.print(spliteTime("/Date(1479312000000+0800)") + "\n");
         System.out.print(spliteTime("/Date(1481472000000+0800)") + "\n");
         System.out.print(spliteTime("/Date(1479375483610+0800)") + "\n");
+        System.out.print(getCurrentSystemTime() + 1 * 60 * 1000 + "\n");
         System.out.print(getCurrentSystemTime() + 3 * 60 * 1000 + "\n");
         System.out.print(getCurrentSystemTime() + 4 * 60 * 1000 + "\n");
         System.out.print(getCurrentSystemTime() + 10 * 60 * 1000 + "\n");

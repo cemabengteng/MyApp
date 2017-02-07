@@ -1,63 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/charge_gift_fullPanel"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal|bottom|right"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/bt_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:text="完整动画"/>
+    <ProgressBar
+        style="@style/mprogressbar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:progress="20"/>
 
-
-    <com.example.plu.myapp.main.ComBoView
-        android:id="@+id/cobo_view"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginRight="10dp"
-        android:background="#66666666"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_charge_gift_bg"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/shap_charge_gift_view_bg"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/tv_charge_gift_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="燃烧吧"
-            android:textColor="@color/white"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:id="@+id/tv_charge_gift_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_charge_gift_name"
-            android:layout_centerHorizontal="true"
-            android:drawablePadding="2dp"
-            android:drawableRight="@drawable/ic_user_longbi_small"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:singleLine="true"
-            android:text="100"
-            android:textColor="@color/orange"
-            android:textSize="10sp"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
