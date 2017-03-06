@@ -20,25 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".databinding.DataBindingActivity">
-
-
-        </activity>
-
-        <activity android:name=".love.LoveActivity">
-
-        </activity>
-
-        <activity android:name=".biggift.main.LargeGiftMainActivity">
-
-        </activity>
-
-        <activity
-            android:name=".biggift.setjson.SetJsonActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name=".biggift.show.ShowActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
     </application>
 

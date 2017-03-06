@@ -1,7 +1,5 @@
 package com.example.plu.myapp.dagger.component;
 
-import com.example.plu.myapp.biggift.main.LargeGiftMainActivity;
-import com.example.plu.myapp.biggift.setjson.SetJsonActivity;
 import com.example.plu.myapp.dagger.base.BaseComponent;
 
 import dagger.Subcomponent;
@@ -11,7 +9,5 @@ import dagger.Subcomponent;
  */
 @Subcomponent
 public interface CommonActivityComponent extends BaseComponent {
-    void inject(LargeGiftMainActivity largeGiftMainActivity);
 
-    void inject(SetJsonActivity setJsonActivity);
 }
