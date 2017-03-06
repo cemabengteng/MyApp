@@ -3,7 +3,6 @@ package com.example.plu.myapp.dagger.component;
 import com.example.plu.myapp.dagger.base.BaseComponent;
 import com.example.plu.myapp.dagger.moudle.ActivityModule;
 import com.example.plu.myapp.dagger.scope.ActivityScope;
-import com.example.plu.myapp.main.MainComponent;
 
 import dagger.Subcomponent;
 
@@ -15,6 +14,5 @@ import dagger.Subcomponent;
 public interface ActivityComponent extends BaseComponent {
     CommonActivityComponent provideCommonComponent();
 
-    MainComponent provideMainComponent();
 
 }
