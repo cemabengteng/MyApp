@@ -22,7 +22,7 @@ public class ViewHolder<V extends MvpView> {
     private V viewProxy;
 
     public ViewHolder(V view) {
-        viewRef = new WeakReference<V>(view);
+        viewRef = new WeakReference<>(view);
         initViewClass(view);
     }
 
