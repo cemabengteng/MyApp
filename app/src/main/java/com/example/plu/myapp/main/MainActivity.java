@@ -4,13 +4,14 @@ import android.os.Bundle;
 
 import com.example.plu.myapp.R;
 import com.example.plu.myapp.base.activity.MvpActivity;
+import com.example.plu.myapp.base.mvp.MvpView;
 
 import javax.inject.Inject;
 
 /**
  * Created by chengXing on 2016/9/13.
  */
-public class MainActivity extends MvpActivity<MainComponent, MainPresenter> {
+public class MainActivity extends MvpActivity<MainComponent, MainPresenter> implements MvpView {
 
     @Inject
     MainPresenter mPresenter;
