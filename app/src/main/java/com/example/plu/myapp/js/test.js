@@ -1,18 +1,22 @@
-var spawn = require('child_process').spawn;
-var ls = spawn('cmd.exe',['/c', 'dir']);
-ls.stdout.on('data',function(data){
-    console.log(data.toString);
-})
+function Point(x,y){
+    this.xLocation = x;
+    this.yLocation = y;
+}
 
-ls.stderr.on('data',function(data){
-    console.log('error:' + data.toString());
-})
+Point.prototype = {
+    xTranslation:function(x){
+        this.xLocation = this.xLocation + x;
+    },
 
-ls.on('close',function(code){
-    console.log('exit: ' + code);
-})
+    yTranslation: function(y){
+        this.yLocation = this.yLocation + y;
+    },
 
-ls.on('error',function(err){
-    console.log('error: ' + err.toString());
-})
+    toString:function(){
+        return "(" + this.xLocation + "," + this.yLocation + ")";
+    }
+}
 
+var p = new Point(1,2);
+console.log(Object.prototype.toString.call(p));
+console.log(p.toString());

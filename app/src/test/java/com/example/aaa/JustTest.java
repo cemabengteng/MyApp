@@ -1,5 +1,7 @@
 package com.example.aaa;
 
+import com.google.gson.Gson;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
@@ -73,9 +75,47 @@ public class JustTest {
 
     @Test
     public void testRxjava(){
-        double i = (float)23 / 3;
-        System.out.print(i);
+        String json = "{\"code\":\"160005\",\"message\":任务不存在}";
+        Gson gson = new Gson();
+        Te te = gson.fromJson(json,Te.class);
+        System.out.print(te);
     }
+
+    class Te{
+
+        /**
+         * code : 160005
+         * message : 任务不存在
+         */
+
+        private int code;
+        private int message;
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public int getMessage() {
+            return message;
+        }
+
+        public void setMessage(int message) {
+            this.message = message;
+        }
+
+        @Override
+        public String toString() {
+            return "Te{" +
+                    "code=" + code +
+                    ", message='" + message + '\'' +
+                    '}';
+        }
+    }
+
 
 
 }

@@ -1,20 +1,30 @@
-var cluster = require('cluster');
-var http = require('http');
-var cpuNums = require('os').cpus().length;
+var superagent = require('superagent');
+var cheerio = require('cheerio');
+/*
+    1. load页面
+    2. 载入cheerio
+    3. 写入数据库
+    用不同的异步库都体验一下
+*/
+var loadPromise = new Promise((resolve,reject)=>{
+    superagent
+        .get('www.baidu.com')
+        .end((err,resulet)=>{
+            if(err){
+                reject(err);
+            }else{
+                var $ = cheerio.load(resulet);
+                resolve($);
+            }
+        })
+})
 
-if(cluster.isMaster){
-    console.log(`Master ${process.pid} is Running`);
-    for(var i = 0; i < cpuNums; i++){
-        cluster.fork();
-    }
 
-    cluster.on('exit',function(work,code,signal){
-        console.log(`worker ${work.process.pid} died`);
-    })
-}else{
-    http.createServer(function(req,res){
-        res.writeHead(200);
-        res.end('hello workd\n');
-    }).listen(7777);
-    console.log(`worker ${process.pid} started`);
+function* gen(x){
+    var y = yield x + 2;
+    return y;
 }
+
+var v= gen(10);
+console.log(v.next());
+console.log(v.next().value);
