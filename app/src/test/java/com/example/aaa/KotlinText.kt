@@ -1,5 +1,7 @@
 package com.example.aaa
 
+import android.os.Looper
+import com.safframework.app.annotation.Async
 import org.junit.Test
 
 /**
@@ -9,11 +11,9 @@ import org.junit.Test
 class KotlinText {
 
     @Test
-    fun go() {
-        var a:String? = ""
-        a = null
-//        var l = a?.length ?: -1
-        var l = a!!.length
-        print(l)
+    @Async
+    fun useAsync() {
+        print(" thread=" + Thread.currentThread().id)
+        print("ui thread=" + Looper.getMainLooper().thread.id)
     }
 }
